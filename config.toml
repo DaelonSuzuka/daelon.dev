@@ -1,0 +1,49 @@
+baseURL = "daelon.net"
+languageCode = "en-us"
+title = "daelon.net"
+copyright = "Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved."
+theme = "npq-hugo"
+pygmentsUseClasses=true
+
+[params]
+  author = "Daelon Suzuka"
+  description = "your description"
+  keywords = "hugo blog"
+  useAvatar = true
+  microBlogSection = "posts"
+  displayMicroBlog = false
+  displayRecent = true
+  recentMax = 4
+  mail = "daelonsuzuka@gmail.com"
+  mainSections = ["posts", "projects"]
+
+[menu]
+  [[menu.main]]
+    name = "home"
+    pre = "<i class=\"fas fa-home fa-sm\"></i>"
+    url = "/"
+    weight = -9 
+  [[menu.main]]
+    name = "posts"
+    pre = "<i class=\"fas fa-keyboard fa-ms\"></i>"
+    url = "/posts/"
+    weight = -8
+  [[menu.main]]
+    name = "tags"
+    pre = "<i class=\"fas fa-tags fa-ms\"></i>"
+    url = "/tags"
+    weight = -7 
+  [[menu.main]]
+    name = "projects"
+    url = "/projects"
+    weight = -6 
+  [[menu.main]]
+    name = "github"
+    pre = "<i class=\"fab fa-github fa-ms\"></i>"
+    url = "https://github.com/DaelonSuzuka"
+    weight = -5 
+  [[menu.main]]
+    name = "about"
+    pre = "<i class=\"far fa-envelope\"></i>"
+    url = "/about"
+    weight = -1 

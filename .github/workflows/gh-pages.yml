@@ -17,7 +17,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@latest
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.80.0'
           # extended: true
 
       - name: Build
@@ -32,4 +32,4 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@latest
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.80.0'

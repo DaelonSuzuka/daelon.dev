@@ -1,0 +1,130 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="your description"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><script src=https://kit.fontawesome.com/1b7478c139.js crossorigin=anonymous></script><title>daelon.net</title></head><body><aside id=sidenav><header><a href=https://daelon.net/><img src=https://daelon.net/avatar.png alt=avatar></a>
+<a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><i class="fas fa-home fa-sm"></i><span>home</span></a>
+<a href=/posts/><i class="fas fa-keyboard fa-ms"></i><span>posts</span></a>
+<a href=/projects><i class="fas fa-folder"></i><span>projects</span></a>
+<a href=/scripts><i class="fas fa-scroll"></i><span>scripts</span></a>
+<a href=/tags><i class="fas fa-tags fa-ms"></i><span>tags</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><i class="fab fa-github fa-ms"></i><span>github</span></a>
+<a href=/about><i class="far fa-envelope"></i><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>Autokeys</h1><nav id=TableOfContents></nav><p>While setting up a development environment on my <a href=posts/mbp.md>newest computer</a>, I realized that my ssh key management situation has become untenable. I now have three development machines: a desktop, a Surface Pro 5, and a mid-2012 Macbook Pro. All three are running Windows 10 Pro, and I have at least one WSL installation on each machine. That&rsquo;s a minimum of six keys.</p><p>Each of those keys needs to be usable on at least a dozen target machines: a VPS, a couple industrial automation machines, a home server, a mess of raspberry pis, and more I can&rsquo;t remember.</p><p>Using <code>ssh-copy-id</code> already wasn&rsquo;t good enough, because password authentication is disabled on all of my target machines. The existing workflow was something like this:</p><ol><li>set up machine</li><li>enable sshd</li><li>ssh into the machine using my password</li><li>download my list of public keys from github</li><li>move list to <code>~/.ssh/authorized_keys</code></li><li>disable password in <code>/etc/ssh/sshd_config</code></li><li>restart sshd</li><li>test that key login works correctly</li></ol><p>This has been fine for adding a new target, but adding a new dev machine is slightly more of a pain. I already added the W10+WSL keys from the MBP to my GitHub account, but now what? The easiest thing would be using my desktop or Surface to to log in to each of the existing targets. It probably would have taken half an hour if I&rsquo;d just buckled down and done that from the start, but&mldr; We don&rsquo;t do that here:</p><p><img src=https://imgs.xkcd.com/comics/automation.png alt></p><p>My first draft solution was writing a small script to automatically update <code>authorized_keys</code>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>wget https://github.com/&lt;GitHubUsername&gt;.keys
+mv &lt;GitHubUsername&gt;.keys ~/.ssh/authorized_keys
+</code></pre></td></tr></table></div></div><p>This is better, but still requires manual intervention. The next thought was to set up a cron job on each target so they&rsquo;d automatically fetch my keys every hour or so. This was easy enough to set up, but then there&rsquo;s a propagation delay of however often the cron job runs. Faster response time would be better, but mostly it just didn&rsquo;t feel &lsquo;right&rsquo;.</p><p>Enter <a href=https://man.openbsd.org/sshd_config#AuthorizedKeysCommand>AuthorizedKeysCommand</a>. With this parameter in <code>sshd_config</code>, you can &ldquo;specify a program to be used to look up the user&rsquo;s public keys.&rdquo;</p><p>Bingo.</p><p>We just need to provide a program that accepts <a href=https://man.openbsd.org/sshd_config#TOKENS>these tokens</a>, and outputs a list of keys in the same format as the <code>authorized_keys</code> file. The following script should fit the bill:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> in
+    &lt;SystemUsername&gt;<span style=color:#f92672>)</span>
+        wget --quiet -O - https://github.com/&lt;GitHubUsername&gt;.keys
+        ;;
+    *<span style=color:#f92672>)</span>
+        echo
+        ;;
+<span style=color:#66d9ef>esac</span>
+</code></pre></td></tr></table></div></div><p>We can install this by embedding the script in a heredoc inside a script:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo cat &gt;&gt; /usr/local/bin/autokey.sh <span style=color:#e6db74>&lt;&lt;- END_TEXT
+</span><span style=color:#e6db74>    case &#34;$1&#34; in
+</span><span style=color:#e6db74>        $SystemUsername)
+</span><span style=color:#e6db74>            wget --quiet -O - https://github.com/$GitHubUsername.keys
+</span><span style=color:#e6db74>            ;;
+</span><span style=color:#e6db74>        *)
+</span><span style=color:#e6db74>            echo
+</span><span style=color:#e6db74>            ;;
+</span><span style=color:#e6db74>    esac
+</span><span style=color:#e6db74>END_TEXT</span>
+</code></pre></td></tr></table></div></div><p>Next we need to edit <code>/etc/ssh/sshd_config</code>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo cat &gt;&gt; /etc/ssh/sshd_config <span style=color:#e6db74>&lt;&lt;- END_TEXT
+</span><span style=color:#e6db74>    AuthorizedKeysCommand=/usr/local/bin/autokey.sh
+</span><span style=color:#e6db74>    AuthorizedKeysCommandUser=root
+</span><span style=color:#e6db74>END_TEXT</span>
+</code></pre></td></tr></table></div></div><p>Let&rsquo;s put it all together as <code>autokey_setup.sh</code>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#! /bin/sh
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $# -ne <span style=color:#ae81ff>2</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+    echo <span style=color:#e6db74>&#34;wrong number of parameters&#34;</span>
+<span style=color:#66d9ef>fi</span>
+
+SystemUsername<span style=color:#f92672>=</span>$1
+GitHubUsername<span style=color:#f92672>=</span>$2
+
+<span style=color:#75715e># create the script</span>
+sudo cat &gt; /usr/local/bin/autokey.sh <span style=color:#e6db74>&lt;&lt;- END_TEXT
+</span><span style=color:#e6db74>#! /bin/sh
+</span><span style=color:#e6db74>
+</span><span style=color:#e6db74>case &#34;$1&#34; in
+</span><span style=color:#e6db74>    $SystemUsername)
+</span><span style=color:#e6db74>        wget --quiet -O - https://github.com/$GitHubUsername.keys
+</span><span style=color:#e6db74>        ;;
+</span><span style=color:#e6db74>    *)
+</span><span style=color:#e6db74>        echo
+</span><span style=color:#e6db74>        ;;
+</span><span style=color:#e6db74>esac
+</span><span style=color:#e6db74>END_TEXT</span>
+
+<span style=color:#75715e># mark it executable and remove write permissions</span>
+sudo chmod u+x,o-w /usr/local/bin/autokey.sh
+
+<span style=color:#75715e># append our parameters to the config file</span>
+sudo cat &gt;&gt; /etc/ssh/sshd_config <span style=color:#e6db74>&lt;&lt;- END_TEXT
+</span><span style=color:#e6db74>AuthorizedKeysCommand=/usr/local/bin/autokey.sh
+</span><span style=color:#e6db74>AuthorizedKeysCommandUser=root
+</span><span style=color:#e6db74>END_TEXT</span>
+
+<span style=color:#75715e># restart the sshd service to apply our config changes</span>
+sudo systemctl restart sshd.service
+</code></pre></td></tr></table></div></div><p>The raw script is available <a href=daelon.net/scripts/autokey_setup.sh>here</a>, and setting this up on a new system should as easy as the following:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>wget daelon.net/scripts/autokey_setup.sh
+chmod u+x autokey_setup.sh
+sudo ./autokey_setup.sh &lt;Username&gt; &lt;GitHubUsername&gt;
+</code></pre></td></tr></table></div></div><div class=nav-next-prev><div class=nav-prev><a href=https://daelon.net/posts/hello/><i class="fas fa-chevron-left"></i></a></div><a class=nav-top href=#>top</i></a><div class=nav-next><a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a></div></div></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i><a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

@@ -27,11 +27,6 @@ pygmentsUseClasses=true
     url = "/posts/"
     weight = -8
   [[menu.main]]
-    name = "tags"
-    pre = "<i class=\"fas fa-tags fa-ms\"></i>"
-    url = "/tags"
-    weight = -7 
-  [[menu.main]]
     name = "projects"
     pre = "<i class=\"fas fa-folder\"></i>"
     url = "/projects"
@@ -40,7 +35,12 @@ pygmentsUseClasses=true
     name = "scripts"
     pre = "<i class=\"fas fa-scroll\"></i>"
     url = "/scripts"
-    weight = -6 
+    weight = -5 
+  [[menu.main]]
+    name = "tags"
+    pre = "<i class=\"fas fa-tags fa-ms\"></i>"
+    url = "/tags"
+    weight = -3
   [[menu.main]]
     name = "github"
     pre = "<i class=\"fab fa-github fa-ms\"></i>"

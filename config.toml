@@ -1,7 +1,6 @@
 baseURL = "https://daelon.net/"
 languageCode = "en-us"
 title = "daelon.net"
-theme = "npq-hugo"
 pygmentsUseClasses=true
 
 [params]
@@ -37,10 +36,14 @@ pygmentsUseClasses=true
     url = "/projects"
     weight = -6 
   [[menu.main]]
+    name = "scripts"
+    url = "/scripts"
+    weight = -6 
+  [[menu.main]]
     name = "github"
     pre = "<i class=\"fab fa-github fa-ms\"></i>"
     url = "https://github.com/DaelonSuzuka"
-    weight = -5 
+    weight = -2
   [[menu.main]]
     name = "about"
     pre = "<i class=\"far fa-envelope\"></i>"

@@ -33,10 +33,12 @@ pygmentsUseClasses=true
     weight = -7 
   [[menu.main]]
     name = "projects"
+    pre = "<i class=\"fas fa-folder\"></i>"
     url = "/projects"
     weight = -6 
   [[menu.main]]
     name = "scripts"
+    pre = "<i class=\"fas fa-scroll\"></i>"
     url = "/scripts"
     weight = -6 
   [[menu.main]]

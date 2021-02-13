@@ -1,7 +1,11 @@
 baseURL = "https://daelon.net/"
 languageCode = "en-us"
 title = "daelon.net"
-pygmentsUseClasses=true
+
+[markup]
+  [markup.highlight]
+    lineNos = true
+    codeFences = true
 
 [params]
   author = "Daelon Suzuka"

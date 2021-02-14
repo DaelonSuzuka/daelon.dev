@@ -6,7 +6,7 @@
 
  <text font-size="28" font-stretch="condensed" font-family="Impact">
     <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
-    <textPath xlink:href="#f">
+    <textPath id="quote" xlink:href="#f">
         and you can just give it the actual text
     </textPath>
  </text>

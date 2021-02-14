@@ -1,8 +1,9 @@
 <aside id="sidenav">
     <header>
     {{if eq .Site.Params.useAvatar true}}
-        <a href={{ "" | absURL }}><img src="{{ "avatar.svg" | absURL }}" alt="avatar"></a>
-        
+        <a id="avatar" href={{ "" | absURL }}></a>
+        {{ partial "avatar.html" }}
+
     {{end}}
 
     <a id="branding" href={{ "" | absURL }}>

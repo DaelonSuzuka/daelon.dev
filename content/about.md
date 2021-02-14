@@ -5,3 +5,5 @@ draft: false
 ---
 
 this is an about page
+
+This site is built using [Hugo]() and the [theme]().

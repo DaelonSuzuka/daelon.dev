@@ -1,7 +1,6 @@
 baseURL = "https://daelon.net/"
 languageCode = "en-us"
 title = "daelon.net"
-disqusShortname = "daelon.disqus.com"
 
 [markup]
   [markup.highlight]
@@ -10,15 +9,14 @@ disqusShortname = "daelon.disqus.com"
 
 [params]
   author = "Daelon Suzuka"
-  description = "your description"
+  description = "some guy's technology blog"
   keywords = "hugo blog"
   useAvatar = true
   microBlogSection = "posts"
   displayMicroBlog = false
-  displayRecent = true
+  displayRecent = false
   recentMax = 4
   mail = "daelonsuzuka@gmail.com"
-  mainSections = ["posts", "projects"]
 
 [menu]
   [[menu.main]]

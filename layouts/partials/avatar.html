@@ -34,13 +34,10 @@
                 <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
                 </g>
             </svg>`;
-            var obj = document.createElement('object')
-            obj.innerHTML = svg_string
-            return obj
+            return svg_string
         }
 
-        var navbar = document.getElementById("avatar")
-        navbar.appendChild(create_svg())
+        document.getElementById("avatar").innerHTML = create_svg()
 
     </script>
 </avatar>

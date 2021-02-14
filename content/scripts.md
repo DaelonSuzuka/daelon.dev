@@ -7,4 +7,5 @@ draft: false
 This page is a collection of useful scripts I've written.
 
 [autokey_setup.sh](/scripts/autokey_setup.sh)
+
 [.screenrc](/scripts/.screenrc)

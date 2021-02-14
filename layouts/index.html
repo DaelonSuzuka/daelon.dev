@@ -2,6 +2,9 @@
     {{if .Site.Params.displayHomeContent}}
         {{.Content}}
     {{end}}
+
+    <a><img src="{{ "avatar.svg" | absURL }}" alt="avatar"></a>
+
     {{if ne .Site.Params.displayRecent false}}
     <div class="section"> 
         <div class="section-title">recent</div> 

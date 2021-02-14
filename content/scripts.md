@@ -6,8 +6,4 @@ draft: false
 
 This page is a collection of useful scripts I've written.
 
-# `autokeys`
-
-automatically configures sshd to authenticate against an external source
-
-{{< gist DaelonSuzuka 9713547459e8734de97750f12475b7a6 >}}
+[autokey](/scripts/autokey_setup.sh)

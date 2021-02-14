@@ -1,6 +1,7 @@
 baseURL = "https://daelon.net/"
 languageCode = "en-us"
 title = "daelon.net"
+disqusShortname = "daelon.disqus.com"
 
 [markup]
   [markup.highlight]

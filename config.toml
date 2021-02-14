@@ -40,9 +40,9 @@ title = "daelon.net"
     url = "/scripts"
     weight = -5 
   [[menu.main]]
-    name = "tags"
-    pre = "<i class=\"fas fa-tags fa-ms\"></i>"
-    url = "/tags"
+    name = "links"
+    pre = "<i class=\"fas fa-link\"></i>"
+    url = "/links"
     weight = -3
   [[menu.main]]
     name = "github"

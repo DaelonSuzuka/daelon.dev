@@ -1,12 +1,14 @@
-<!doctype html><html><head><meta name=generator content="Hugo 0.80.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><script src=https://kit.fontawesome.com/1b7478c139.js crossorigin=anonymous></script><title>daelon.net</title><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><avatar><script>var quotes=['one','two','three']
-function create_svg(){var quote=quotes[Math.floor(Math.random()*quotes.length)]
+<!doctype html><html><head><meta name=generator content="Hugo 0.80.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><script src=https://kit.fontawesome.com/1b7478c139.js crossorigin=anonymous></script><title>daelon.net</title><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><avatar><script>var quotes=[['I thought what I\'d do was I\'d pretend I was one of those deaf-mutes',28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23],]
+function create_svg(){var rand=Math.floor(Math.random()*quotes.length)
+var size=quotes[rand][1]
+var quote=quotes[rand][0]
 var svg_string=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
                 <g fill="#2A7DAE">
                     <circle r="160"/>
                     <circle r="150" fill="#fff"/>
                     
-                <text font-size="28" font-stretch="condensed" font-family="Impact">
+                <text font-size="${size}" font-stretch="condensed" font-family="Impact">
                     <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
                     <textPath xlink:href="#f">
                         ${quote}

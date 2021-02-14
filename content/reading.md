@@ -7,6 +7,7 @@ draft: true
 Things I've read that have changed the way I think.
 
 [Casey Muratori's blog](https://caseymuratori.com/contents)
+
 Notable articles:
 - [Semantic Compression](https://caseymuratori.com/blog_0015)
 - [Complexity and Granularity](https://caseymuratori.com/blog_0016)

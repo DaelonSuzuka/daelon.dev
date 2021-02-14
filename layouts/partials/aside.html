@@ -2,7 +2,7 @@
     <header>
     {{if eq .Site.Params.useAvatar true}}
         <svg id="avatar" href={{ "" | absURL }}></svg>
-        {{ partial "avatar.html" }}
+        {{ partial "avatar.html" . }}
 
     {{end}}
 

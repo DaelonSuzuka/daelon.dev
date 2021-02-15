@@ -14,6 +14,7 @@ title = "daelon.net"
   useAvatar = true
   microBlogSection = "posts"
   displayMicroBlog = false
+  displayHomeContent = true
   displayRecent = false
   recentMax = 4
   mail = "daelonsuzuka@gmail.com"

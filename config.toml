@@ -21,36 +21,36 @@ title = "daelon.net"
 [menu]
   [[menu.main]]
     name = "home"
-    pre = "<i class=\"fas fa-home fa-sm\"></i>"
+    # pre = "<i class=\"fas fa-home fa-sm\"></i>"
     url = "/"
     weight = -9 
   [[menu.main]]
     name = "posts"
-    pre = "<i class=\"fas fa-keyboard fa-ms\"></i>"
+    # pre = "<i class=\"fas fa-keyboard fa-ms\"></i>"
     url = "/posts/"
     weight = -8
   [[menu.main]]
     name = "projects"
-    pre = "<i class=\"fas fa-folder\"></i>"
+    # pre = "<i class=\"fas fa-folder\"></i>"
     url = "/projects"
     weight = -6 
   [[menu.main]]
     name = "scripts"
-    pre = "<i class=\"fas fa-scroll\"></i>"
+    # pre = "<i class=\"fas fa-scroll\"></i>"
     url = "/scripts"
     weight = -5 
   [[menu.main]]
     name = "links"
-    pre = "<i class=\"fas fa-link\"></i>"
+    # pre = "<i class=\"fas fa-link\"></i>"
     url = "/links"
     weight = -3
   [[menu.main]]
     name = "github"
-    pre = "<i class=\"fab fa-github fa-ms\"></i>"
+    # pre = "<i class=\"fab fa-github fa-ms\"></i>"
     url = "https://github.com/DaelonSuzuka"
     weight = -2
   [[menu.main]]
     name = "about"
-    pre = "<i class=\"far fa-envelope\"></i>"
+    # pre = "<i class=\"far fa-envelope\"></i>"
     url = "/about"
     weight = -1 

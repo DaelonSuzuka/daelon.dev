@@ -6,6 +6,8 @@ type: "post"
 tags: ["scripts", "ssh", "sshd"]
 ---
 
+Edit(3/7/2021): The solutions discussed in the post are ill-formed and obsolete, and were crafted under the influence of staying up past my bedtime and using manpages as late-night reading material. A new post with more manageable solutions to this problem is coming soon
+
 While setting up a development environment on my [newest computer](posts/mbp.md), I realized that my ssh key management situation has become untenable. I now have three development machines: a desktop, a Surface Pro 5, and a mid-2012 Macbook Pro. All three are running Windows 10 Pro, and I have at least one WSL installation on each machine. That's a minimum of six keys.
 
 Each of those keys needs to be usable on at least a dozen target machines: a VPS, a couple industrial automation machines, a home server, a mess of raspberry pis, and more I can't remember.

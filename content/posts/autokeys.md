@@ -1,7 +1,7 @@
 ---
 title: "Autokeys"
 date: 2021-02-13T14:38:10-05:00
-draft: false
+draft: true
 type: "post"
 tags: ["scripts", "ssh", "sshd"]
 ---

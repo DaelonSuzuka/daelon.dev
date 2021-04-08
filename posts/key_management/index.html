@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><title>daelon.net</title><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><script>var quotes=[['I thought what I\'d do was I\'d pretend I was one of those deaf-mutes',28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23],]
+function create_svg(){var rand=Math.floor(Math.random()*quotes.length)
+var size=quotes[rand][1]
+var quote=quotes[rand][0]
+var svg_string=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
+            <g fill="#2A7DAE">
+                <circle r="160"/>
+                <circle r="150" fill="#fff"/>
+                
+            <text font-size="${size}" font-stretch="condensed" font-family="Impact">
+                <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
+                <textPath xlink:href="#f">
+                    ${quote}
+                </textPath>
+            </text>
+            
+            <circle r="115"/>
+            <circle r="95" fill="#fff"/>
+            <path d="m-8-119h16 l2,5h-20z"/>
+            <circle cx="160" cy="0" r="40"/>
+            <path d="m-95-20v-20h255a40,40 0,0 1 0,80h-55v-20z"/>
+            <path d="m-85 0a85,85 0,0 0 170,0h-20a65,65 0,0 1-130,0z"/>
+            <path d="m-65 20v20h140v-20z"/>
+            <path d="m-115-20v10h25v30h250a20,20 0,0 0 0,-40z" fill="#fff"/>
+            <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
+            <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
+            </g>
+        </svg>`;return svg_string}
+document.getElementById("avatar").innerHTML=create_svg()</script><a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><span>home</span></a>
+<a href=/posts/><span>posts</span></a>
+<a href=/projects><span>projects</span></a>
+<a href=/scripts><span>scripts</span></a>
+<a href=/links><span>links</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><span>github</span></a>
+<a href=/about><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>Towards An O(1) Solution For Key Management</h1><nav id=TableOfContents><ul><li><a href=#solution-1>Solution #1:</a></li><li><a href=#solution-2>Solution #2:</a></li><li><a href=#solution-3>Solution #3:</a></li></ul></nav><p>I&rsquo;m trying to optimize the following scenario:
+I have 2 development machines. Each one has a keypair.
+There are 10 remote hosts that I want to SSH into from any of the dev machines. Password authentication is disabled. I do not have physical access to all of the remote hosts.
+I have created a 3rd dev machine, and I need to be able to SSH into any of hosts.</p><h2 id=solution-1>Solution #1:</h2><ul><li>get on one of the original dev machines</li><li>SSH into the a remote host</li><li>enable password auth</li><li>go back to the new dev machine</li><li>run <code>ssh-copy-id &lt;remote host></code></li><li>go back to original dev machine</li><li>disable password auth</li><li>repeat for every remote host</li></ul><p>This is terrible. It&rsquo;s a ton of manual work, I&rsquo;m intentionally creating a big security hole, and I&rsquo;m probably gonna forget to resecure some of my remote machines.</p><h2 id=solution-2>Solution #2:</h2><ul><li>make sure the new machine&rsquo;s public key is uploaded to my GitHub account</li><li>get on one of the original dev machines</li><li>SSH into the a remote host</li><li>run <code>ssh-import-id gh:&lt;username></code></li><li>repeat for every remote host</li></ul><p>Better. This is O(2n), where the 1st solution was O(10), and I can&rsquo;t forget to resecure the remote hosts.</p><p>Unfortunately this still requires going to back to one of the original machines, and it still requires two manual actions per remote host. If I forget to update one of the hosts, take my new dev machine out of the house, and then need to get into that particular host, I&rsquo;m SOL.</p><h2 id=solution-3>Solution #3:</h2><ul><li>make sure all the remote hosts are listed in an ansible inventory file</li><li>make sure the new machine&rsquo;s public key is uploaded to my GitHub account</li><li>get on one of the original dev machines</li><li>run <code>ansible all -i hosts -a "ssh-import-id gh:&lt;username>"</code></li></ul><p>Even more better. Now I&rsquo;m down to a constant time solution, assuming I have access to an original dev machine.</p><p>This is how I&rsquo;m currently managing this problem, except I put the ansible command in a shell script called <code>keypush.sh</code>. I expect this will scale quite well for my immediate needs.</p><div class=nav-next-prev><div class=nav-prev><a href=https://daelon.net/posts/mbp/><i class="fas fa-chevron-left"></i></a></div><a class=nav-top href=#>top</i></a><div class=nav-next><a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a></div></div><div class=spacer></div><script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i><a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

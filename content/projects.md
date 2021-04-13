@@ -6,15 +6,17 @@ draft: false
 
 This is an overview of some of the projects I've been working on lately.
 
-# [Stagehand](https://github.com/DaelonSuzuka/Stagehand)
+## Stagehand
 
-A desktop application that helps to automate your [OBS](https://obsproject.com/) workflow.
+[Stagehand](https://github.com/DaelonSuzuka/Stagehand) is a desktop application that helps to automate your [OBS](https://obsproject.com/) workflow.
 
 Can interface with USB-connected physical controls like button pads or foot switches using the JUDI protocol.
 
-# [EasyXC8](https://github.com/DaelonSuzuka/Easy-XC8)
+## EasyXC8
 
-# Chitin
+[EasyXC8](https://github.com/DaelonSuzuka/Easy-XC8) is a cross-platform toolchain for developing embedded projects using Microchip's XC8 compiler. 
+
+## Chitin
 
 A tiny shell designed to fit in very small embedded systems.
 
@@ -24,19 +26,19 @@ Features:
 
 A live demo is sometimes available [on my website](http://chitin.daelon.net).
 
-# [QtStrap](https://github.com/qtstrap/qtstrap)
+## QtStrap
 
-QtStrap is a python library to get your PySide2/PyQt5 applications up and running quickly.
+[QtStrap](https://github.com/qtstrap/qtstrap) is a python library to get your PySide2/PyQt5 applications up and running quickly.
 
 It comes with prebuilt solutions to many potentially frustrating Python/Qt issues.
 
 QtStrap also has a decent(and growing!) selection of custom widgets with advanced behavior.
 
-# [JUDI](https://github.com/Codex-Engine/JUDI)
+## JUDI
 
-JUDI is a basic framework for developing serial communication protocols to connect embedded devices to computers(or each other).
+[JUDI](https://github.com/Codex-Engine/JUDI) is a basic framework for developing serial communication protocols to connect embedded devices to computers(or each other).
 
-# Codex 
+## Codex 
 
 Codex is a serial device protocol abstraction layer designed to standardize communcations with different types of serial devices.
 

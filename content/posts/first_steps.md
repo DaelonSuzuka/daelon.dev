@@ -77,20 +77,29 @@ The while loop inside delay_ms() only does two things: clear the interrupt flag,
 
 You can use an oscilloscope on the LED to test that your delays are delaying for the right amount of time. Test multiple delay values. If the delay is too long or too short, the timer configuration can be adjusted to bring it in line.
 
-A simple microsecond delay can be made without even using a timer:
-```c
-void delay_us(uint16_t microSeconds) {
-    while (microSeconds--) {
-        asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
-        asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
-    }
-}
-```
-
-
-
-
+Now, the details of this section will be irrelevant to you(unless you're using a PIC18 running at 64MHz), but the goal is a universal one: making sure your processor is running at the right speed. If you don't make a concious effort to prove that the clock is set properly, and have a way to PROVE that it's set properly(by measuring your 1000mS delay with a scope, for instance), then you're setting yourself up for failure before you've even started.
 
 # Say Hello
 
-\<future content>
+Once your processor is running and you trust that the clocks are right, your next goal is to set up a UART for serial debugging. Native serial ports on computers are quite rare now, so you'll probably need some kind of USB->UART cable. I recommend spending the money for a cable that has a genuine FTDI converter chip, it'll pay off in terms of reliability and driver support.
+
+I like to define at least two functions: `uart_tx_char` and `uart_tx_string`
+```c
+void uart_tx_char(char c) {
+    // send a single byte to your UART peripheral here
+}
+
+void uart_tx_string(const char *string) {
+    uint8_t i = 0;
+    while (string[i]) {
+        uart_tx_char(string[i++]);
+    }
+}
+
+void main(void) {
+    while(1) {
+        uart_tx_string("beep\r\n");
+        delay_ms(1000);
+    }
+}
+```

@@ -4,8 +4,11 @@ date: 2021-02-11T17:28:33-05:00
 draft: false
 ---
 
-This page is a collection of useful scripts I've written.
+Useful scripts that are too small to deserve their own project page go here.
 
-[autokey_setup.sh](/scripts/autokey_setup.sh)
+### GNU Screen backspace fix
+GNU Screen does something weird with the backspace key, and this [.screenrc](/scripts/.screenrc) fixes it for me.
+```sh
+bindkey -d -k kb stuff "\010"
+```
 
-[.screenrc](/scripts/.screenrc)

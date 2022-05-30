@@ -12,3 +12,8 @@ GNU Screen does something weird with the backspace key, and this [.screenrc](/sc
 bindkey -d -k kb stuff "\010"
 ```
 
+### Enforce trailing newlines on entire directories
+This isn't fast, but it's copy/pastable and should be very portable.
+```sh
+find . -type f -exec sed -i -e '$a\' {} \; -print
+```

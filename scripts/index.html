@@ -7,6 +7,14 @@
 <link rel=stylesheet href=https://daelon.net/css/syntax.css>
 <link rel=stylesheet href=https://daelon.net/css/style.css>
 <title>daelon.net</title>
+<meta property="og:title" content="Scripts">
+<meta property="og:description" content="Useful scripts that are too small to deserve their own project page go here.
+GNU Screen backspace fix GNU Screen does something weird with the backspace key, and this .screenrc fixes it for me.
+1  bindkey -d -k kb stuff &#34;\010&#34;   Enforce trailing newlines on entire directories This isn&rsquo;t fast, but it&rsquo;s copy/pastable and should be very portable.
+1  find . -type f -exec sed -i -e '$a\' {} \; -print   Fix ssh key permissions 1  find .">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://daelon.net/scripts/">
+<meta property="og:image" content="https://daelon.net/avatar.svg">
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
 <meta name=theme-color content="#ffffff">

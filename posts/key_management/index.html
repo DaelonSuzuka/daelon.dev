@@ -7,6 +7,12 @@
 <link rel=stylesheet href=https://daelon.net/css/syntax.css>
 <link rel=stylesheet href=https://daelon.net/css/style.css>
 <title>daelon.net</title>
+<meta property="og:title" content="Towards An O(1) Solution For Key Management">
+<meta property="og:description" content="I&rsquo;m trying to optimize the following scenario: I have 2 development machines. Each one has a keypair. There are 10 remote hosts that I want to SSH into from any of the dev machines. Password authentication is disabled. I do not have physical access to all of the remote hosts. I have created a 3rd dev machine, and I need to be able to SSH into any of hosts.
+Solution #1:  get on one of the original dev machines SSH into the a remote host enable password auth go back to the new dev machine run ssh-copy-id <remote host> go back to original dev machine disable password auth repeat for every remote host  This is terrible.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://daelon.net/posts/key_management/">
+<meta property="og:image" content="https://daelon.net/avatar.svg">
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
 <meta name=theme-color content="#ffffff">

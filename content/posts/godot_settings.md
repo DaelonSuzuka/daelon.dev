@@ -2,6 +2,7 @@
 title: "Godot Editor Settings and You: An Exercise in Pain Reduction"
 date: 2022-09-27T22:21:45-04:00
 draft: false
+description: Recommendations for a better overall experience
 tags: ["godot"]
 ---
 

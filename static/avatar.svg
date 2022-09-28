@@ -4,10 +4,10 @@
  <circle r="160"/>
  <circle r="150" fill="#fff"/>
 
- <text font-size="28" font-stretch="condensed" font-family="Impact">
+ <text font-size="26" font-stretch="condensed" font-family="Impact">
     <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
     <textPath id="quote" xlink:href="#f">
-        and you can just give it the actual text
+        I thought what I'd do was I'd pretend I was a tech writer on the internet
     </textPath>
  </text>
  

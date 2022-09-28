@@ -68,20 +68,36 @@ daelon.net
 <main id=main>
 <a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
 <div class=content>
-<h1 id=title>Adventures in VSCode Extensions</h1>
+<h1 id=title>Godot Editor Settings and You: An Exercise in Pain Reduction</h1>
 <nav id=TableOfContents></nav>
-<p>A collection of resources for building VSCode extensions:</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=pedro-w.tmlanguage">https://marketplace.visualstudio.com/items?itemName=pedro-w.tmlanguage</a></p>
-<p><a href=https://www.apeth.com/nonblog/stories/textmatebundle.html>https://www.apeth.com/nonblog/stories/textmatebundle.html</a></p>
-<p><a href=https://code.visualstudio.com/api/references/vscode-api>https://code.visualstudio.com/api/references/vscode-api</a></p>
-<p><a href=https://www.nicoespeon.com/en/2019/11/fix-vscode-extension-performance-issue/>https://www.nicoespeon.com/en/2019/11/fix-vscode-extension-performance-issue/</a></p>
+<p>The Godot editor has a number of absolutely boneheaded default settings. Here&rsquo;s my recommendations for a better overall experience:</p>
+<p><del>Step one: Use an external text editor</del></p>
+<p>This just saves space:</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/inspector/horizontal_vector2_editing = true
+</code></pre><p>These prevent the internal script editor from building a collection of every single script in your project:</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/scene_tabs/restore_scenes_on_load = true
+text_editor/files/open_dominant_script_on_scene_change = false
+text_editor/files/restore_scripts_on_load = false
+</code></pre><p>This makes the editor (attempt) to reload things like tool and plugin scripts when you change them in a real text editor.</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/files/auto_reload_scripts_on_external_change = true
+</code></pre><p>These stop the blasted thing from opening the internal script editor when there&rsquo;s an error:</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/external/use_external_editor = true
+text_editor/external/exec_path = &quot;&quot;
+text_editor/external/exec_flags = &quot;&quot;
+</code></pre><p>These apply to LSP completions when using an external editor:</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/completion/add_type_hints = true
+text_editor/completion/use_single_quotes = true
+</code></pre><p>These improve the LSP experience a little bit:</p>
+<pre tabindex=0><code class=language-gdresource data-lang=gdresource>network/language_server/show_native_symbols_in_editor = true
+network/language_server/use_thread = true
+</code></pre>
 <div class=nav-next-prev>
 <div class=nav-prev>
-<a href=https://daelon.net/posts/first_steps/><i class="fas fa-chevron-left"></i></a>
+<a href=https://daelon.net/posts/vscode_extensions/><i class="fas fa-chevron-left"></i></a>
 </div>
 <a class=nav-top href=#>top</i></a>
 <div class=nav-next>
-<a href=https://daelon.net/posts/godot_settings/><i class="fas fa-chevron-right"></i></a>
+<a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a>
 </div>
 </div>
 <div class=spacer></div>

@@ -15,10 +15,15 @@ This just saves space:
 interface/inspector/horizontal_vector2_editing = true
 ```
 
-These prevent the internal script editor from building a collection of every single script in your project:
+I often work on plugins, which means restarting the editor all time. This makes restarting suck less.
 
 ```gdresource
 interface/scene_tabs/restore_scenes_on_load = true
+```
+
+These prevent the internal script editor from building a collection of every single script in your project:
+
+```gdresource
 text_editor/files/open_dominant_script_on_scene_change = false
 text_editor/files/restore_scripts_on_load = false
 ```

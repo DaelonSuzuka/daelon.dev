@@ -1,0 +1,171 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="some guy's technology blog">
+<meta name=Author content="Daelon Suzuka">
+<meta name=keywords content="hugo blog">
+<link rel=stylesheet href=https://daelon.net/css/syntax.css>
+<link rel=stylesheet href=https://daelon.net/css/style.css>
+<title>daelon.net</title>
+<meta property="og:title" content="Godot Layout Helpers: Additional Exercises in Pain Reduction">
+<meta property="og:description" content="Small helpers that make a big difference">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://daelon.net/posts/godot_layout_helpers/">
+<meta property="og:image" content="https://daelon.net/og_preview.png">
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<meta name=theme-color content="#ffffff">
+</head><body><aside id=sidenav>
+<header><svg id="avatar" href="https://daelon.net"/></svg>
+<script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23]];function create_svg(){var a=Math.floor(Math.random()*quotes.length),b=quotes[a][1],c=quotes[a][0],d=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
+            <g fill="#2A7DAE">
+                <circle r="160"/>
+                <circle r="150" fill="#fff"/>
+                
+            <text font-size="${b}" font-stretch="condensed" font-family="Impact">
+                <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
+                <textPath xlink:href="#f">
+                    ${c}
+                </textPath>
+            </text>
+            
+            <circle r="115"/>
+            <circle r="95" fill="#fff"/>
+            <path d="m-8-119h16 l2,5h-20z"/>
+            <circle cx="160" cy="0" r="40"/>
+            <path d="m-95-20v-20h255a40,40 0,0 1 0,80h-55v-20z"/>
+            <path d="m-85 0a85,85 0,0 0 170,0h-20a65,65 0,0 1-130,0z"/>
+            <path d="m-65 20v20h140v-20z"/>
+            <path d="m-115-20v10h25v30h250a20,20 0,0 0 0,-40z" fill="#fff"/>
+            <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
+            <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
+            </g>
+        </svg>`;return d}document.getElementById("avatar").innerHTML=create_svg()</script>
+<a id=branding href=https://daelon.net/>
+daelon.net
+</a>
+</header>
+<nav>
+<a href=/>
+<span>home</span>
+</a>
+<a href=/posts/>
+<span>posts</span>
+</a>
+<a href=/projects>
+<span>projects</span>
+</a>
+<a href=/scripts>
+<span>scripts</span>
+</a>
+<a href=/links>
+<span>links</span>
+</a>
+<a href=https://github.com/DaelonSuzuka target=_blank>
+<span>github</span>
+</a>
+<a href=/about>
+<span>about</span>
+</a>
+</nav>
+</aside>
+<main id=main>
+<a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
+<div class=content>
+<h1 id=title>Godot Layout Helpers: Additional Exercises in Pain Reduction</h1>
+<nav id=TableOfContents></nav>
+<h1 id=the-setup>The setup</h1>
+<p>Creating UI layouts in GDScript is annoying, but it doesn&rsquo;t have to be. Let&rsquo;s explore:</p>
+<p>Consider the following snippet, that creates a dialog box, a vertical box layout, and a Label and ProgressBar.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gdscript data-lang=gdscript><span style=color:#66d9ef>var</span> update_dialog <span style=color:#f92672>=</span> <span style=color:#a6e22e>AcceptDialog</span><span style=color:#f92672>.</span>new()
+<span style=color:#66d9ef>var</span> vbox <span style=color:#f92672>=</span> <span style=color:#a6e22e>VBoxContainer</span><span style=color:#f92672>.</span>new()
+update_dialog<span style=color:#f92672>.</span>add_child(vbox)
+<span style=color:#66d9ef>var</span> status_label <span style=color:#f92672>=</span> <span style=color:#a6e22e>Label</span><span style=color:#f92672>.</span>new()
+vbox<span style=color:#f92672>.</span>add_child(status_label)
+<span style=color:#66d9ef>var</span> progress_bar <span style=color:#f92672>=</span> <span style=color:#a6e22e>ProgressBar</span><span style=color:#f92672>.</span>new()
+vbox<span style=color:#f92672>.</span>add_child(progress_bar)
+</code></pre></td></tr></table>
+</div>
+</div><p>This is unpleasant for a number of reasons, but the most important one is that you can&rsquo;t just read it from top to bottom. Every other line diverts your attention back up the page. Nearly as bad, almost half the lines are just layout boilerplate, and don&rsquo;t really say anything valuable.</p>
+<p>Simply put, the signal-to-noise ratio of this 7 line snippet is awful.</p>
+<h1 id=the-better-way>The better way</h1>
+<p>This snippet uses a helper class to simplify the layout code, reduce boilerplate, and prevent your flow from being interrupted by removing most of the backtracking. This version can be read from top to bottom in one shot.</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gdscript data-lang=gdscript><span style=color:#66d9ef>var</span> update_dialog <span style=color:#f92672>=</span> <span style=color:#a6e22e>AcceptDialog</span><span style=color:#f92672>.</span>new()
+<span style=color:#66d9ef>var</span> vbox <span style=color:#f92672>=</span> VBox<span style=color:#f92672>.</span>new(update_dialog)
+<span style=color:#66d9ef>var</span> status_label <span style=color:#f92672>=</span> vbox<span style=color:#f92672>.</span>add(<span style=color:#a6e22e>Label</span><span style=color:#f92672>.</span>new())
+<span style=color:#66d9ef>var</span> progress_bar <span style=color:#f92672>=</span> vbox<span style=color:#f92672>.</span>add(<span style=color:#a6e22e>ProgressBar</span><span style=color:#f92672>.</span>new())
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=the-explanation>The explanation</h1>
+<p>This class is 7 lines long, do I really need to explain it?</p>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gdscript data-lang=gdscript><span style=color:#66d9ef>class</span> VBox <span style=color:#66d9ef>extends</span> <span style=color:#a6e22e>VBoxContainer</span>:
+    <span style=color:#66d9ef>func</span> _init(parent<span style=color:#f92672>=</span>null):
+        <span style=color:#66d9ef>if</span> parent:
+            parent<span style=color:#f92672>.</span>add_child(self)
+
+    <span style=color:#66d9ef>func</span> add(object):
+        add_child(object)
+        <span style=color:#66d9ef>return</span> object
+</code></pre></td></tr></table>
+</div>
+</div><p>Okay, fine, there are some subtleties:</p>
+<ul>
+<li>This is a <code>class</code>, intended to be copied into some other script. I did this to avoid polluting the global class namespace and creating changes in <code>project.godot</code>.</li>
+<li>The name <code>VBox</code> was chosen because it&rsquo;s shorter and thus produces shorter code.</li>
+<li>The <code>_init()</code> method&rsquo;s <code>parent</code> argument is optional, so you can still use it the normal way.</li>
+</ul>
+<p>(Do I have to point out that if you want the horizontal version, just change two <code>V</code>s to <code>H</code>s?)</p>
+<div class=nav-next-prev>
+<div class=nav-prev>
+<a href=https://daelon.net/posts/godot_editor_settings/><i class="fas fa-chevron-left"></i></a>
+</div>
+<a class=nav-top href=#>top</i></a>
+<div class=nav-next>
+<a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a>
+</div>
+</div>
+<div class=spacer></div>
+<script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script>
+</div><footer>
+<div class=footer-content>
+<div class=contact-info>
+<div class=footer-mail>
+<i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a> </div>
+</div>
+</div>
+</footer></main>
+</body>
+<script src=https://daelon.net/js/navbutton.js></script>
+</html>

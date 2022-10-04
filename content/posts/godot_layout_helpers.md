@@ -30,7 +30,9 @@ This is unpleasant for a number of reasons, but the most important one is that y
 Simply put, the signal-to-noise ratio of this 7 line snippet is awful.
 
 
-# The better way
+# Can we do better?
+
+Obviously yes(why else would this post exist?).
 
 This snippet uses a helper class to simplify the layout code, reduce boilerplate, and prevent your flow from being interrupted by removing most of the backtracking. This version can be read from top to bottom in one shot.
 

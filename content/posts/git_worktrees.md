@@ -1,7 +1,7 @@
 ---
 title: "Git Worktrees: The Best Kept Git Secret?"
 date: 2022-10-03T21:29:28-04:00
-draft: true
+draft: false
 type: "posts"
 description: Why is this not more popular?
 tags: ["git", "workflow"]

@@ -15,7 +15,7 @@ What if I told you there was a better way?
 
 # Enter, Git Worktrees
 
-Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted indepentantly. Checking out a new branch is a single command and doesn't disturb your existing branches, so there's no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.
+Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn't disturb your existing branches, so there's no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.
 
 # Okay, But How Does It Work?
 

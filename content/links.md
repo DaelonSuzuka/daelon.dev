@@ -9,20 +9,25 @@ Things that I think are worth sharing.
 
 # Blogs
 
-[Casey Muratori][1] - ( [Semantic Compression][2], [Complexity and Granularity][3] )
+[Casey Muratori][1a] - ( [Semantic Compression][1b], [Complexity and Granularity][1c] )
 
-[1]: https://caseymuratori.com/contents
-[2]: https://caseymuratori.com/blog_0015
-[3]: https://caseymuratori.com/blog_0016
+[1a]: https://caseymuratori.com/contents
+[1b]: https://caseymuratori.com/blog_0015
+[1c]: https://caseymuratori.com/blog_0016
 
 [null program](https://nullprogram.com/)
 
+[acko.net]([2a]) - ([How to Fold a Julia Fractal][2b])
+
+[2a]: https://acko.net
+[2b]: https://acko.net/blog/how-to-fold-a-julia-fractal/
+
 # Tools
 
-[Unit Juggler][1] - Particularly the [frequency conversion][2] page
+[Unit Juggler][3a] - Particularly the [frequency conversion][3b] page
 
-[1]: https://www.unitjuggler.com
-[2]: https://www.unitjuggler.com/frequency-conversion.html
+[3a]: https://www.unitjuggler.com
+[3b]: https://www.unitjuggler.com/frequency-conversion.html
 
 # Other Stuff
 

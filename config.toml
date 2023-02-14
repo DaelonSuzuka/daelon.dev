@@ -31,6 +31,11 @@ title = "daelon.net"
     url = "/posts/"
     weight = -8
   [[menu.main]]
+    name = "gamedev"
+    # pre = "<i class=\"fas fa-folder\"></i>"
+    url = "/gamedev"
+    weight = -6 
+  [[menu.main]]
     name = "projects"
     # pre = "<i class=\"fas fa-folder\"></i>"
     url = "/projects"

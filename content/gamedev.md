@@ -7,7 +7,7 @@ draft: false
 
 # My Games
 
-- [Skyknights Online](https://magnusdei.io/skyknights/): Competitive arena flight sim.
+- [Skyknights Online](https://magnusdei.io/skyknights/): A multiplayer, competitive flight sim focused on unusual movement mechanics
 - [Isotope: ASH](https://store.steampowered.com/app/1793530/Isotope_ASH/): A real-time card battler in the style of the Megaman Battle Network franchise.
 - [Nightwaker](https://bottled-up-studio.itch.io/nightwaker): Ludum Dare 49 entry.
 - [gdstrap](https://github.com/DaelonSuzuka/gdstrap) - A curated set of engine plugins and framework files to help kickstart new projects.

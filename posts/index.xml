@@ -7,6 +7,7 @@ This just saves space:
 interface/inspector/horizontal_vector2_editing = true I often work on plugins, which means restarting the editor all time. This makes restarting suck less.
 interface/scene_tabs/restore_scenes_on_load = true These prevent the internal script editor from building a collection of every single script in your project:</description></item><item><title>Adventures in VSCode Extensions</title><link>https://daelon.net/posts/vscode_extensions/</link><pubDate>Thu, 08 Sep 2022 19:59:13 -0400</pubDate><guid>https://daelon.net/posts/vscode_extensions/</guid><description>The scope tags (&amp;ldquo;name&amp;rdquo;) applied by a match are actually a space-separated list of tags. Multiple tags can be added by a single rule. This fact can be used for debugging by adding extra tags to a rule to make sure it&amp;rsquo;s being applied properly.
 markup.italic markup.bold A collection of resources for building VSCode extensions:
+https://github.com/RedCMD/TmLanguage-Syntax-Highlighter
 https://marketplace.visualstudio.com/items?itemName=pedro-w.tmlanguage
 https://www.apeth.com/nonblog/stories/textmatebundle.html
 https://code.visualstudio.com/api/references/vscode-api

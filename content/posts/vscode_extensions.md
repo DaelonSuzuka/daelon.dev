@@ -15,7 +15,9 @@ markup.bold
 
 A collection of resources for building VSCode extensions:
 
-https://marketplace.visualstudio.com/items?itemName=pedro-w.tmlanguage
+https://github.com/RedCMD/TmLanguage-Syntax-Highlighter
+
+~~https://marketplace.visualstudio.com/items?itemName=pedro-w.tmlanguage~~
 
 https://www.apeth.com/nonblog/stories/textmatebundle.html
 

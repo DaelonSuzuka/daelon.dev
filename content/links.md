@@ -7,7 +7,7 @@ description: "Things that I think are worth sharing."
 
 Things that I think are worth sharing.
 
-# Blogs
+## Blogs
 
 [Casey Muratori][1a] - ( [Semantic Compression][1b], [Complexity and Granularity][1c] )
 
@@ -22,14 +22,19 @@ Things that I think are worth sharing.
 [2a]: https://acko.net
 [2b]: https://acko.net/blog/how-to-fold-a-julia-fractal/
 
-# Tools
+[Dan North]([3a]) - ([CUPID—for joyful coding][3b])
 
-[Unit Juggler][3a] - Particularly the [frequency conversion][3b] page
+[3a]: https://dannorth.net/blog/
+[3b]: https://dannorth.net/2022/02/10/cupid-for-joyful-coding/
 
-[3a]: https://www.unitjuggler.com
-[3b]: https://www.unitjuggler.com/frequency-conversion.html
+## Tools
 
-# Other Stuff
+[Unit Juggler][4a] - Particularly the [frequency conversion][4b] page
+
+[4a]: https://www.unitjuggler.com
+[4b]: https://www.unitjuggler.com/frequency-conversion.html
+
+## Other Stuff
 
 [The Waypoint NDA](https://waypointnda.com/) - The one and done Non-Disclosure Agreement
 

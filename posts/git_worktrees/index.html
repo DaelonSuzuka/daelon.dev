@@ -1,32 +1,13 @@
-<!doctype html><html><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="some guy's technology blog">
-<meta name=Author content="Daelon Suzuka">
-<meta name=keywords content="hugo blog">
-<link rel=stylesheet href=https://daelon.net/css/syntax.css>
-<link rel=stylesheet href=https://daelon.net/css/style.css>
-<title>daelon.net</title>
-<meta property="og:title" content="Git Worktrees: The Best Kept Git Secret?">
-<meta property="og:description" content="Why is this not more popular?">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://daelon.net/posts/git_worktrees/">
-<meta property="og:image" content="https://daelon.net/og_preview.png">
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<meta name=theme-color content="#ffffff">
-</head><body><aside id=sidenav>
-<header><svg id="avatar" href="https://daelon.net"/></svg>
-<script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23]];function create_svg(){var a=Math.floor(Math.random()*quotes.length),b=quotes[a][1],c=quotes[a][0],d=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><title>daelon.net</title><meta property="og:title" content="Git Worktrees: The Best Kept Git Secret?"><meta property="og:description" content="Why is this not more popular?"><meta property="og:type" content="article"><meta property="og:url" content="https://daelon.net/posts/git_worktrees/"><meta property="og:image" content="https://daelon.net/og_preview.png"><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],["Technology is a word that describes something that doesn’t work yet",27],["People who are really serious about software should make their own hardware",23]];function create_svg(){var e=Math.floor(Math.random()*quotes.length),t=quotes[e][1],n=quotes[e][0],s=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
             <g fill="#2A7DAE">
                 <circle r="160"/>
                 <circle r="150" fill="#fff"/>
                 
-            <text font-size="${b}" font-stretch="condensed" font-family="Impact">
+            <text font-size="${t}" font-stretch="condensed" font-family="Impact">
                 <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
                 <textPath xlink:href="#f">
-                    ${c}
+                    ${n}
                 </textPath>
             </text>
             
@@ -41,76 +22,31 @@
             <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             </g>
-        </svg>`;return d}document.getElementById("avatar").innerHTML=create_svg()</script>
-<a id=branding href=https://daelon.net/>
-daelon.net
-</a>
-</header>
-<nav>
-<a href=/>
-<span>home</span>
-</a>
-<a href=/posts/>
-<span>posts</span>
-</a>
-<a href=/gamedev>
-<span>gamedev</span>
-</a>
-<a href=/projects>
-<span>projects</span>
-</a>
-<a href=/scripts>
-<span>scripts</span>
-</a>
-<a href=/links>
-<span>links</span>
-</a>
-<a href=https://github.com/DaelonSuzuka target=_blank>
-<span>github</span>
-</a>
-<a href=/about>
-<span>about</span>
-</a>
-</nav>
-</aside>
-<main id=main>
-<a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
-<div class=content>
-<h1 id=title>Git Worktrees: The Best Kept Git Secret?</h1>
-<nav id=TableOfContents></nav>
-<h1 id=whats-the-problem>What&rsquo;s the Problem?</h1>
-<p>Git branches are just a fact of life if you work on projects above a certain size: there&rsquo;s just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn&rsquo;t mean <em>always</em> mean pleasant, and I&rsquo;m sure most of you have danced the Branch Shuffle enough times that you know exactly what I&rsquo;m talking about.</p>
-<p>What if I told you there was a better way?</p>
-<h1 id=enter-git-worktrees>Enter, Git Worktrees</h1>
-<p>Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn&rsquo;t disturb your existing branches, so there&rsquo;s no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.</p>
-<h1 id=okay-but-how-does-it-work>Okay, But How Does It Work?</h1>
-<p>I was deeply surprised at how easy it was to set up. Here&rsquo;s my recommendation:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir MyProject <span style=color:#f92672>&amp;&amp;</span> cd MyProject
-git clone --bare https://url.com/path/to/MyProject .bare
-echo <span style=color:#e6db74>&#34;gitdir: ./.bare&#34;</span>&gt; .git
-
-git worktree add master
-git worktree add other_branch
-</code></pre></td></tr></table>
-</div>
-</div><p>A normal clone operation will produce a folder that looks like this:</p>
-<pre tabindex=0><code>MyProject
+        </svg>`;return s}document.getElementById("avatar").innerHTML=create_svg()</script><a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><span>home</span></a>
+<a href=/posts/><span>posts</span></a>
+<a href=/gamedev><span>gamedev</span></a>
+<a href=/projects><span>projects</span></a>
+<a href=/scripts><span>scripts</span></a>
+<a href=/links><span>links</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><span>github</span></a>
+<a href=/about><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>Git Worktrees: The Best Kept Git Secret?</h1><nav id=TableOfContents></nav><h1 id=whats-the-problem>What&rsquo;s the Problem?</h1><p>Git branches are just a fact of life if you work on projects above a certain size: there&rsquo;s just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn&rsquo;t mean <em>always</em> mean pleasant, and I&rsquo;m sure most of you have danced the Branch Shuffle enough times that you know exactly what I&rsquo;m talking about.</p><p>What if I told you there was a better way?</p><h1 id=enter-git-worktrees>Enter, Git Worktrees</h1><p>Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn&rsquo;t disturb your existing branches, so there&rsquo;s no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.</p><h1 id=okay-but-how-does-it-work>Okay, But How Does It Work?</h1><p>I was deeply surprised at how easy it was to set up. Here&rsquo;s my recommendation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir MyProject <span style=color:#f92672>&amp;&amp;</span> cd MyProject
+</span></span><span style=display:flex><span>git clone --bare https://url.com/path/to/MyProject .bare
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;gitdir: ./.bare&#34;</span>&gt; .git
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>git worktree add master
+</span></span><span style=display:flex><span>git worktree add other_branch
+</span></span></code></pre></td></tr></table></div></div><p>A normal clone operation will produce a folder that looks like this:</p><pre tabindex=0><code>MyProject
 ├── .git
 │   └── &lt;git config folder contents&gt;
 ├── other_file.txt
 └── readme.md
-</code></pre><p>The above procedure will produce this instead:</p>
-<pre tabindex=0><code>MyProject
+</code></pre><p>The above procedure will produce this instead:</p><pre tabindex=0><code>MyProject
 ├── .bare
 │   └── &lt;git config folder contents&gt;
 ├── master
@@ -121,37 +57,4 @@ git worktree add other_branch
 │   ├── new_file.txt
 │   └── readme.md
 └── .git // file, not folder
-</code></pre><p>As promised, each branch is checked out into it&rsquo;s own folder. The <code>.git</code> file is necessary because without it and the extra argument to clone into <code>./.bare</code> , the git config folder will just be dumped into the project root. I don&rsquo;t know why this is the default operating mode of worktrees but I find it revolting.</p>
-<p>The contents of <code>.git</code> simply tell the git executable that the actual git config folder is in <code>./.bare</code> instead of the usual <code>./.git</code>.</p>
-<h1 id=now-what>Now what?</h1>
-<p>Personally I open the individual branch folders with VSCode and proceed as usual, but if you like workspace files you could set up a multi-root workspace to open all the branches at once or whatever you want.</p>
-<h1 id=references>References</h1>
-<p>Actual documentation:</p>
-<p><a href=https://git-scm.com/docs/git-worktree>https://git-scm.com/docs/git-worktree</a></p>
-<p>Inspired by ThePrimagen&rsquo;s YouTube video &ldquo;Git&rsquo;s Best and Most Unknown Feature&rdquo;:</p>
-<p><a href="https://www.youtube.com/watch?v=2uEqYw-N8uE">https://www.youtube.com/watch?v=2uEqYw-N8uE</a></p>
-<p>Refined with ideas from Morgan Cugerone:</p>
-<p><a href=https://morgan.cugerone.com/blog/how-to-use-git-worktree-and-in-a-clean-way/>https://morgan.cugerone.com/blog/how-to-use-git-worktree-and-in-a-clean-way/</a></p>
-<p><a href=https://morgan.cugerone.com/blog/workarounds-to-git-worktree-using-bare-repository-and-cannot-fetch-remote-branches/>https://morgan.cugerone.com/blog/workarounds-to-git-worktree-using-bare-repository-and-cannot-fetch-remote-branches/</a></p>
-<div class=nav-next-prev>
-<div class=nav-prev>
-<a href=https://daelon.net/posts/godot_layout_helpers/><i class="fas fa-chevron-left"></i></a>
-</div>
-<a class=nav-top href=#>top</i></a>
-<div class=nav-next>
-<a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a>
-</div>
-</div>
-<div class=spacer></div>
-<script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script>
-</div><footer>
-<div class=footer-content>
-<div class=contact-info>
-<div class=footer-mail>
-<i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a> </div>
-</div>
-</div>
-</footer></main>
-</body>
-<script src=https://daelon.net/js/navbutton.js></script>
-</html>
+</code></pre><p>As promised, each branch is checked out into it&rsquo;s own folder. The <code>.git</code> file is necessary because without it and the extra argument to clone into <code>./.bare</code> , the git config folder will just be dumped into the project root. I don&rsquo;t know why this is the default operating mode of worktrees but I find it revolting.</p><p>The contents of <code>.git</code> simply tell the git executable that the actual git config folder is in <code>./.bare</code> instead of the usual <code>./.git</code>.</p><h1 id=now-what>Now what?</h1><p>Personally I open the individual branch folders with VSCode and proceed as usual, but if you like workspace files you could set up a multi-root workspace to open all the branches at once or whatever you want.</p><h1 id=references>References</h1><p>Actual documentation:</p><p><a href=https://git-scm.com/docs/git-worktree>https://git-scm.com/docs/git-worktree</a></p><p>Inspired by ThePrimagen&rsquo;s YouTube video &ldquo;Git&rsquo;s Best and Most Unknown Feature&rdquo;:</p><p><a href="https://www.youtube.com/watch?v=2uEqYw-N8uE">https://www.youtube.com/watch?v=2uEqYw-N8uE</a></p><p>Refined with ideas from Morgan Cugerone:</p><p><a href=https://morgan.cugerone.com/blog/how-to-use-git-worktree-and-in-a-clean-way/>https://morgan.cugerone.com/blog/how-to-use-git-worktree-and-in-a-clean-way/</a></p><p><a href=https://morgan.cugerone.com/blog/workarounds-to-git-worktree-using-bare-repository-and-cannot-fetch-remote-branches/>https://morgan.cugerone.com/blog/workarounds-to-git-worktree-using-bare-repository-and-cannot-fetch-remote-branches/</a></p><div class=nav-next-prev><div class=nav-prev><a href=https://daelon.net/posts/godot_layout_helpers/><i class="fas fa-chevron-left"></i></a></div><a class=nav-top href=#>top</i></a><div class=nav-next><a class=grayed-out href=javascript:void()><i class="fas fa-chevron-right"></i></a></div></div><div class=spacer></div><script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

@@ -1,37 +1,18 @@
-<!doctype html><html><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="some guy's technology blog">
-<meta name=Author content="Daelon Suzuka">
-<meta name=keywords content="hugo blog">
-<link rel=stylesheet href=https://daelon.net/css/syntax.css>
-<link rel=stylesheet href=https://daelon.net/css/style.css>
-<title>daelon.net</title>
-<meta property="og:title" content="Projects">
-<meta property="og:description" content="This is an overview of some of the projects I&rsquo;ve been working on lately.
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><title>daelon.net</title><meta property="og:title" content="Projects"><meta property="og:description" content="This is an overview of some of the projects I&rsquo;ve been working on lately.
 Stagehand Stagehand is a desktop application that helps to automate your OBS workflow.
 Can interface with USB-connected physical controls like button pads or foot switches using the JUDI protocol.
 EasyXC8 EasyXC8 is a cross-platform toolchain for developing embedded projects using Microchip&rsquo;s XC8 compiler.
 Chitin A tiny shell designed to fit in very small embedded systems.
-Features:">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://daelon.net/projects/">
-<meta property="og:image" content="https://daelon.net/og_preview.png">
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<meta name=theme-color content="#ffffff">
-</head><body><aside id=sidenav>
-<header><svg id="avatar" href="https://daelon.net"/></svg>
-<script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23]];function create_svg(){var a=Math.floor(Math.random()*quotes.length),b=quotes[a][1],c=quotes[a][0],d=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+Features:"><meta property="og:type" content="article"><meta property="og:url" content="https://daelon.net/projects/"><meta property="og:image" content="https://daelon.net/og_preview.png"><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],["Technology is a word that describes something that doesn’t work yet",27],["People who are really serious about software should make their own hardware",23]];function create_svg(){var e=Math.floor(Math.random()*quotes.length),t=quotes[e][1],n=quotes[e][0],s=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
             <g fill="#2A7DAE">
                 <circle r="160"/>
                 <circle r="150" fill="#fff"/>
                 
-            <text font-size="${b}" font-stretch="condensed" font-family="Impact">
+            <text font-size="${t}" font-stretch="condensed" font-family="Impact">
                 <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
                 <textPath xlink:href="#f">
-                    ${c}
+                    ${n}
                 </textPath>
             </text>
             
@@ -46,83 +27,11 @@ Features:">
             <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             </g>
-        </svg>`;return d}document.getElementById("avatar").innerHTML=create_svg()</script>
-<a id=branding href=https://daelon.net/>
-daelon.net
-</a>
-</header>
-<nav>
-<a href=/>
-<span>home</span>
-</a>
-<a href=/posts/>
-<span>posts</span>
-</a>
-<a href=/gamedev>
-<span>gamedev</span>
-</a>
-<a href=/projects>
-<span>projects</span>
-</a>
-<a href=/scripts>
-<span>scripts</span>
-</a>
-<a href=/links>
-<span>links</span>
-</a>
-<a href=https://github.com/DaelonSuzuka target=_blank>
-<span>github</span>
-</a>
-<a href=/about>
-<span>about</span>
-</a>
-</nav>
-</aside>
-<main id=main>
-<a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
-<div class=content>
-<h1 id=title>Projects</h1>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#stagehand>Stagehand</a></li>
-<li><a href=#easyxc8>EasyXC8</a></li>
-<li><a href=#chitin>Chitin</a></li>
-<li><a href=#qtstrap>QtStrap</a></li>
-<li><a href=#judi>JUDI</a></li>
-<li><a href=#codex>Codex</a></li>
-</ul>
-</nav>
-<p>This is an overview of some of the projects I&rsquo;ve been working on lately.</p>
-<h2 id=stagehand>Stagehand</h2>
-<p><a href=https://github.com/DaelonSuzuka/Stagehand>Stagehand</a> is a desktop application that helps to automate your <a href=https://obsproject.com/>OBS</a> workflow.</p>
-<p>Can interface with USB-connected physical controls like button pads or foot switches using the JUDI protocol.</p>
-<h2 id=easyxc8>EasyXC8</h2>
-<p><a href=https://github.com/DaelonSuzuka/Easy-XC8>EasyXC8</a> is a cross-platform toolchain for developing embedded projects using Microchip&rsquo;s XC8 compiler.</p>
-<h2 id=chitin>Chitin</h2>
-<p>A tiny shell designed to fit in very small embedded systems.</p>
-<p>Features:</p>
-<ul>
-<li>good escape sequence support</li>
-<li>good line editing</li>
-</ul>
-<p>A live demo is sometimes available <a href=http://chitin.daelon.net>on my website</a>.</p>
-<h2 id=qtstrap>QtStrap</h2>
-<p><a href=https://github.com/qtstrap/qtstrap>QtStrap</a> is a python library to get your PySide2/PyQt5 applications up and running quickly.</p>
-<p>It comes with prebuilt solutions to many potentially frustrating Python/Qt issues.</p>
-<p>QtStrap also has a decent(and growing!) selection of custom widgets with advanced behavior.</p>
-<h2 id=judi>JUDI</h2>
-<p><a href=https://github.com/Codex-Engine/JUDI>JUDI</a> is a basic framework for developing serial communication protocols to connect embedded devices to computers(or each other).</p>
-<h2 id=codex>Codex</h2>
-<p>Codex is a serial device protocol abstraction layer designed to standardize communcations with different types of serial devices.</p>
-<p>The <a href=https://github.com/Codex-Engine/codex-engine-pyqt>reference implementation of Codex</a> is written in python, and built for PySide2/QyQt applications, but non-Qt and non-python implementations shouldn&rsquo;t be difficult.</p>
-</div><footer>
-<div class=footer-content>
-<div class=contact-info>
-<div class=footer-mail>
-<i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a> </div>
-</div>
-</div>
-</footer></main>
-</body>
-<script src=https://daelon.net/js/navbutton.js></script>
-</html>
+        </svg>`;return s}document.getElementById("avatar").innerHTML=create_svg()</script><a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><span>home</span></a>
+<a href=/posts/><span>posts</span></a>
+<a href=/gamedev><span>gamedev</span></a>
+<a href=/projects><span>projects</span></a>
+<a href=/scripts><span>scripts</span></a>
+<a href=/links><span>links</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><span>github</span></a>
+<a href=/about><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>Projects</h1><nav id=TableOfContents><ul><li><a href=#stagehand>Stagehand</a></li><li><a href=#easyxc8>EasyXC8</a></li><li><a href=#chitin>Chitin</a></li><li><a href=#qtstrap>QtStrap</a></li><li><a href=#judi>JUDI</a></li><li><a href=#codex>Codex</a></li></ul></nav><p>This is an overview of some of the projects I&rsquo;ve been working on lately.</p><h2 id=stagehand>Stagehand</h2><p><a href=https://github.com/DaelonSuzuka/Stagehand>Stagehand</a> is a desktop application that helps to automate your <a href=https://obsproject.com/>OBS</a> workflow.</p><p>Can interface with USB-connected physical controls like button pads or foot switches using the JUDI protocol.</p><h2 id=easyxc8>EasyXC8</h2><p><a href=https://github.com/DaelonSuzuka/Easy-XC8>EasyXC8</a> is a cross-platform toolchain for developing embedded projects using Microchip&rsquo;s XC8 compiler.</p><h2 id=chitin>Chitin</h2><p>A tiny shell designed to fit in very small embedded systems.</p><p>Features:</p><ul><li>good escape sequence support</li><li>good line editing</li></ul><p>A live demo is sometimes available <a href=http://chitin.daelon.net>on my website</a>.</p><h2 id=qtstrap>QtStrap</h2><p><a href=https://github.com/qtstrap/qtstrap>QtStrap</a> is a python library to get your PySide2/PyQt5 applications up and running quickly.</p><p>It comes with prebuilt solutions to many potentially frustrating Python/Qt issues.</p><p>QtStrap also has a decent(and growing!) selection of custom widgets with advanced behavior.</p><h2 id=judi>JUDI</h2><p><a href=https://github.com/Codex-Engine/JUDI>JUDI</a> is a basic framework for developing serial communication protocols to connect embedded devices to computers(or each other).</p><h2 id=codex>Codex</h2><p>Codex is a serial device protocol abstraction layer designed to standardize communcations with different types of serial devices.</p><p>The <a href=https://github.com/Codex-Engine/codex-engine-pyqt>reference implementation of Codex</a> is written in python, and built for PySide2/QyQt applications, but non-Qt and non-python implementations shouldn&rsquo;t be difficult.</p></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

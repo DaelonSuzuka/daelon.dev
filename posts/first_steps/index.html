@@ -1,33 +1,14 @@
-<!doctype html><html><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="some guy's technology blog">
-<meta name=Author content="Daelon Suzuka">
-<meta name=keywords content="hugo blog">
-<link rel=stylesheet href=https://daelon.net/css/syntax.css>
-<link rel=stylesheet href=https://daelon.net/css/style.css>
-<title>daelon.net</title>
-<meta property="og:title" content="First Steps For New Firmware">
-<meta property="og:description" content="It&rsquo;s always useful to have a concrete, achievable goal. When working on embedded systems, especially starting a new project, there&rsquo;s so many things to do that it&rsquo;s easy to get overwhelmed by decision paralysis. Imagine you just got the first prototype of a new board. You don&rsquo;t have any code for it yet. Where do you start?
-Blink An LED Hopefully your hardware has an LED tied to a microcontroller pin.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://daelon.net/posts/first_steps/">
-<meta property="og:image" content="https://daelon.net/og_preview.png">
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<meta name=theme-color content="#ffffff">
-</head><body><aside id=sidenav>
-<header><svg id="avatar" href="https://daelon.net"/></svg>
-<script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23]];function create_svg(){var a=Math.floor(Math.random()*quotes.length),b=quotes[a][1],c=quotes[a][0],d=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><title>daelon.net</title><meta property="og:title" content="First Steps For New Firmware"><meta property="og:description" content="It&rsquo;s always useful to have a concrete, achievable goal. When working on embedded systems, especially starting a new project, there&rsquo;s so many things to do that it&rsquo;s easy to get overwhelmed by decision paralysis. Imagine you just got the first prototype of a new board. You don&rsquo;t have any code for it yet. Where do you start?
+Blink An LED Hopefully your hardware has an LED tied to a microcontroller pin."><meta property="og:type" content="article"><meta property="og:url" content="https://daelon.net/posts/first_steps/"><meta property="og:image" content="https://daelon.net/og_preview.png"><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],["Technology is a word that describes something that doesn’t work yet",27],["People who are really serious about software should make their own hardware",23]];function create_svg(){var e=Math.floor(Math.random()*quotes.length),t=quotes[e][1],n=quotes[e][0],s=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
             <g fill="#2A7DAE">
                 <circle r="160"/>
                 <circle r="150" fill="#fff"/>
                 
-            <text font-size="${b}" font-stretch="condensed" font-family="Impact">
+            <text font-size="${t}" font-stretch="condensed" font-family="Impact">
                 <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
                 <textPath xlink:href="#f">
-                    ${c}
+                    ${n}
                 </textPath>
             </text>
             
@@ -42,195 +23,89 @@ Blink An LED Hopefully your hardware has an LED tied to a microcontroller pin.">
             <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             </g>
-        </svg>`;return d}document.getElementById("avatar").innerHTML=create_svg()</script>
-<a id=branding href=https://daelon.net/>
-daelon.net
-</a>
-</header>
-<nav>
-<a href=/>
-<span>home</span>
-</a>
-<a href=/posts/>
-<span>posts</span>
-</a>
-<a href=/gamedev>
-<span>gamedev</span>
-</a>
-<a href=/projects>
-<span>projects</span>
-</a>
-<a href=/scripts>
-<span>scripts</span>
-</a>
-<a href=/links>
-<span>links</span>
-</a>
-<a href=https://github.com/DaelonSuzuka target=_blank>
-<span>github</span>
-</a>
-<a href=/about>
-<span>about</span>
-</a>
-</nav>
-</aside>
-<main id=main>
-<a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
-<div class=content>
-<h1 id=title>First Steps For New Firmware</h1>
-<nav id=TableOfContents></nav>
-<p>It&rsquo;s always useful to have a concrete, achievable goal. When working on embedded systems, especially starting a new project, there&rsquo;s so many things to do that it&rsquo;s easy to get overwhelmed by decision paralysis. Imagine you just got the first prototype of a new board. You don&rsquo;t have any code for it yet. Where do you start?</p>
-<h1 id=blink-an-led>Blink An LED</h1>
-<p>Hopefully your hardware has an LED tied to a microcontroller pin. Assuming it does, the first real goal of the project is to turn that LED on.</p>
-<p>I know it sounds trivial, but getting an LED blinking program to run on your hardware actually contains a bunch of non-trivial accomplishments:</p>
-<ul>
-<li>the compiler has to installed correctly</li>
-<li>the toolchain has to be able to see your project files and invoke the compiler</li>
-<li>the programmer has to exist</li>
-<li>the programmer&rsquo;s drivers have to be installed correctly</li>
-<li>the programmer&rsquo;s control software has to be installed correctly</li>
-<li>the toolchain has to be able to invoke the programmer</li>
-<li>the board has to not explode when you plug in power</li>
-<li>the board has to provide power to the processor</li>
-<li>the board&rsquo;s in circuit programming has to be designed correctly</li>
-<li>the board has to be connected to the programmer</li>
-<li>the programmer has to be connected to the computer</li>
-<li>the processor isn&rsquo;t dead</li>
-<li>the processor boots</li>
-<li>the processor boots and then loads the program you uploaded to it</li>
-</ul>
-<p>I could go on, but hopefully you get the point. Just compiling and uploading a program requires a long list of steps to all go properly, and you should never overlook how complicated this process actually is. Ideally, you should have a toolchain that allows single click or single command compilation and programming of your hardware.</p>
-<p>My open source PIC18 toolchain, <a href=https://github.com/DaelonSuzuka/Easy-XC8>EasyXC8</a>, uses a Makefile with the commands <code>compile</code> and <code>upload</code>. Just running <code>make upload</code> will cause a new hex to be compiled(if necessary), and then the upload that new hex to the hardware using the specified programmer. I&rsquo;m not telling you to use EasyXC8, but if uploading firmware to your board is harder than <code>make upload</code>, there&rsquo;s something wrong with your workflow.</p>
-<h1 id=timing-is-everything>Timing Is Everything</h1>
-<p>Blinking an LED proved that your environment works, and that your processor will boot and run <em>something</em>.</p>
-<p>The next goal is making sure that the something happens when we want it to. Let&rsquo;s set a modest objective: instead of just turning an LED on, let&rsquo;s make that LED blink on and off once per second:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>) {
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>) {
-        set_led(<span style=color:#ae81ff>1</span>);
-        delay_ms(<span style=color:#ae81ff>1000</span>);
-        set_led(<span style=color:#ae81ff>0</span>);
-        delay_ms(<span style=color:#ae81ff>1000</span>);
-    }
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>While it&rsquo;s usually unwise to use blocking delay functions like these, writing this little delay library will be a useful exercise in getting familiar with your hardware.</p>
-<p>This is a &ldquo;simple&rdquo; implentation of delay_ms():</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>delay_init</span>(<span style=color:#66d9ef>void</span>) {
-    timer2_clock_source(TMR2_CLK_FOSC4);
-    timer2_postscale(TMR_POSTSCALE_10);
-    timer2_prescale(TMR_PRESCALE_16);
-    timer2_period_set(<span style=color:#ae81ff>100</span>);
-    timer2_start();
-}
-
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>delay_ms</span>(<span style=color:#66d9ef>uint16_t</span> milliSeconds) {
-    <span style=color:#66d9ef>while</span> (milliSeconds<span style=color:#f92672>--</span>) {
-        timer2_interrupt_flag_clear();
-        <span style=color:#66d9ef>while</span> (<span style=color:#f92672>!</span>timer2_interrupt_flag_read());
-    }
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>This is a deceptively difficult task, because everything about it depends on your specific circumstances. This example is written for a <a href=https://www.microchip.com/wwwproducts/en/PIC18F57Q43>PIC18F57Q43</a> running at 64MHz. This processor has 7 timers, of which I&rsquo;ve chosen timer 2, an 8bit period match timer with a configurable period. I picked this timer because I can start it once and leave it running, and because it automatically resets the counter when it reaches the selected period value. These features make the delay_ms function simpler.</p>
-<p>The postscale, prescale, and period were calculated starting from the main system clock value of 64MHz. In PICs, the main clock is known as FOSC. The selected clock source of <code>TMR2_CLK_FOSC4</code> is the FOSC divided by 4, or 16MHz. At 16MHz, one clock tick is 62.5nS long.</p>
-<p>A single millisecond is equivalent to 1000 microseconds, or 1,000,000 nanoseconds. Dividing 1mS by 62.5nS gives us 16,000, the number of clock ticks in a millisecond. An 8bit timer can&rsquo;t count to 16,000, so we use the prescale to divide by 16, and the postscale to divide by 10, leaving us with a nice target of 100 timer ticks. With the period set to 100, the timer will now overflow every 1 millisecond, and set its interrupt flag.</p>
-<p>The while loop inside delay_ms() only does two things: clear the interrupt flag, and wait for the flag to be set again. Each time through the loop is supposed to be 1mS, and the loop executes once per millisecond we want to delay.</p>
-<p>You can use an oscilloscope on the LED to test that your delays are delaying for the right amount of time. Test multiple delay values. If the delay is too long or too short, the timer configuration can be adjusted to bring it in line.</p>
-<p>Now, the details of this section will be irrelevant to you(unless you&rsquo;re using a PIC18 running at 64MHz), but the goal is a universal one: making sure your processor is running at the right speed. If you don&rsquo;t make a concious effort to prove that the clock is set properly, and have a way to PROVE that it&rsquo;s set properly(by measuring your 1000mS delay with a scope, for instance), then you&rsquo;re setting yourself up for failure before you&rsquo;ve even started.</p>
-<h1 id=say-hello>Say Hello</h1>
-<p>Once your processor is running and you trust that the clocks are right, your next goal is to set up a UART for serial debugging. Native serial ports on computers are quite rare now, so you&rsquo;ll probably need some kind of USB->UART cable. I recommend spending the money for a cable that has a genuine FTDI converter chip, it&rsquo;ll pay off in terms of reliability and driver support.</p>
-<p>I like to define at least two functions: <code>uart_tx_char</code> and <code>uart_tx_string</code></p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>uart_tx_char</span>(<span style=color:#66d9ef>char</span> c) {
-    <span style=color:#75715e>// send a single byte to your UART peripheral here
-</span><span style=color:#75715e></span>}
-
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>uart_tx_string</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>string) {
-    <span style=color:#66d9ef>uint8_t</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-    <span style=color:#66d9ef>while</span> (string[i]) {
-        uart_tx_char(string[i<span style=color:#f92672>++</span>]);
-    }
-}
-
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>) {
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>) {
-        uart_tx_string(<span style=color:#e6db74>&#34;beep</span><span style=color:#ae81ff>\r\n</span><span style=color:#e6db74>&#34;</span>);
-        delay_ms(<span style=color:#ae81ff>1000</span>);
-    }
-}
-</code></pre></td></tr></table>
-</div>
-</div>
-<div class=nav-next-prev>
-<div class=nav-prev>
-<a href=https://daelon.net/posts/key_management/><i class="fas fa-chevron-left"></i></a>
-</div>
-<a class=nav-top href=#>top</i></a>
-<div class=nav-next>
-<a href=https://daelon.net/posts/vscode_extensions/><i class="fas fa-chevron-right"></i></a>
-</div>
-</div>
-<div class=spacer></div>
-<script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script>
-</div><footer>
-<div class=footer-content>
-<div class=contact-info>
-<div class=footer-mail>
-<i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a> </div>
-</div>
-</div>
-</footer></main>
-</body>
-<script src=https://daelon.net/js/navbutton.js></script>
-</html>
+        </svg>`;return s}document.getElementById("avatar").innerHTML=create_svg()</script><a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><span>home</span></a>
+<a href=/posts/><span>posts</span></a>
+<a href=/gamedev><span>gamedev</span></a>
+<a href=/projects><span>projects</span></a>
+<a href=/scripts><span>scripts</span></a>
+<a href=/links><span>links</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><span>github</span></a>
+<a href=/about><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>First Steps For New Firmware</h1><nav id=TableOfContents></nav><p>It&rsquo;s always useful to have a concrete, achievable goal. When working on embedded systems, especially starting a new project, there&rsquo;s so many things to do that it&rsquo;s easy to get overwhelmed by decision paralysis. Imagine you just got the first prototype of a new board. You don&rsquo;t have any code for it yet. Where do you start?</p><h1 id=blink-an-led>Blink An LED</h1><p>Hopefully your hardware has an LED tied to a microcontroller pin. Assuming it does, the first real goal of the project is to turn that LED on.</p><p>I know it sounds trivial, but getting an LED blinking program to run on your hardware actually contains a bunch of non-trivial accomplishments:</p><ul><li>the compiler has to installed correctly</li><li>the toolchain has to be able to see your project files and invoke the compiler</li><li>the programmer has to exist</li><li>the programmer&rsquo;s drivers have to be installed correctly</li><li>the programmer&rsquo;s control software has to be installed correctly</li><li>the toolchain has to be able to invoke the programmer</li><li>the board has to not explode when you plug in power</li><li>the board has to provide power to the processor</li><li>the board&rsquo;s in circuit programming has to be designed correctly</li><li>the board has to be connected to the programmer</li><li>the programmer has to be connected to the computer</li><li>the processor isn&rsquo;t dead</li><li>the processor boots</li><li>the processor boots and then loads the program you uploaded to it</li></ul><p>I could go on, but hopefully you get the point. Just compiling and uploading a program requires a long list of steps to all go properly, and you should never overlook how complicated this process actually is. Ideally, you should have a toolchain that allows single click or single command compilation and programming of your hardware.</p><p>My open source PIC18 toolchain, <a href=https://github.com/DaelonSuzuka/Easy-XC8>EasyXC8</a>, uses a Makefile with the commands <code>compile</code> and <code>upload</code>. Just running <code>make upload</code> will cause a new hex to be compiled(if necessary), and then the upload that new hex to the hardware using the specified programmer. I&rsquo;m not telling you to use EasyXC8, but if uploading firmware to your board is harder than <code>make upload</code>, there&rsquo;s something wrong with your workflow.</p><h1 id=timing-is-everything>Timing Is Everything</h1><p>Blinking an LED proved that your environment works, and that your processor will boot and run <em>something</em>.</p><p>The next goal is making sure that the something happens when we want it to. Let&rsquo;s set a modest objective: instead of just turning an LED on, let&rsquo;s make that LED blink on and off once per second:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>set_led</span>(<span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>delay_ms</span>(<span style=color:#ae81ff>1000</span>);
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>set_led</span>(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>delay_ms</span>(<span style=color:#ae81ff>1000</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>While it&rsquo;s usually unwise to use blocking delay functions like these, writing this little delay library will be a useful exercise in getting familiar with your hardware.</p><p>This is a &ldquo;simple&rdquo; implentation of delay_ms():</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>delay_init</span>(<span style=color:#66d9ef>void</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>timer2_clock_source</span>(TMR2_CLK_FOSC4);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>timer2_postscale</span>(TMR_POSTSCALE_10);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>timer2_prescale</span>(TMR_PRESCALE_16);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>timer2_period_set</span>(<span style=color:#ae81ff>100</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>timer2_start</span>();
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>delay_ms</span>(<span style=color:#66d9ef>uint16_t</span> milliSeconds) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> (milliSeconds<span style=color:#f92672>--</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>timer2_interrupt_flag_clear</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> (<span style=color:#f92672>!</span><span style=color:#a6e22e>timer2_interrupt_flag_read</span>());
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>This is a deceptively difficult task, because everything about it depends on your specific circumstances. This example is written for a <a href=https://www.microchip.com/wwwproducts/en/PIC18F57Q43>PIC18F57Q43</a> running at 64MHz. This processor has 7 timers, of which I&rsquo;ve chosen timer 2, an 8bit period match timer with a configurable period. I picked this timer because I can start it once and leave it running, and because it automatically resets the counter when it reaches the selected period value. These features make the delay_ms function simpler.</p><p>The postscale, prescale, and period were calculated starting from the main system clock value of 64MHz. In PICs, the main clock is known as FOSC. The selected clock source of <code>TMR2_CLK_FOSC4</code> is the FOSC divided by 4, or 16MHz. At 16MHz, one clock tick is 62.5nS long.</p><p>A single millisecond is equivalent to 1000 microseconds, or 1,000,000 nanoseconds. Dividing 1mS by 62.5nS gives us 16,000, the number of clock ticks in a millisecond. An 8bit timer can&rsquo;t count to 16,000, so we use the prescale to divide by 16, and the postscale to divide by 10, leaving us with a nice target of 100 timer ticks. With the period set to 100, the timer will now overflow every 1 millisecond, and set its interrupt flag.</p><p>The while loop inside delay_ms() only does two things: clear the interrupt flag, and wait for the flag to be set again. Each time through the loop is supposed to be 1mS, and the loop executes once per millisecond we want to delay.</p><p>You can use an oscilloscope on the LED to test that your delays are delaying for the right amount of time. Test multiple delay values. If the delay is too long or too short, the timer configuration can be adjusted to bring it in line.</p><p>Now, the details of this section will be irrelevant to you(unless you&rsquo;re using a PIC18 running at 64MHz), but the goal is a universal one: making sure your processor is running at the right speed. If you don&rsquo;t make a concious effort to prove that the clock is set properly, and have a way to PROVE that it&rsquo;s set properly(by measuring your 1000mS delay with a scope, for instance), then you&rsquo;re setting yourself up for failure before you&rsquo;ve even started.</p><h1 id=say-hello>Say Hello</h1><p>Once your processor is running and you trust that the clocks are right, your next goal is to set up a UART for serial debugging. Native serial ports on computers are quite rare now, so you&rsquo;ll probably need some kind of USB->UART cable. I recommend spending the money for a cable that has a genuine FTDI converter chip, it&rsquo;ll pay off in terms of reliability and driver support.</p><p>I like to define at least two functions: <code>uart_tx_char</code> and <code>uart_tx_string</code></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>uart_tx_char</span>(<span style=color:#66d9ef>char</span> c) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// send a single byte to your UART peripheral here
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>uart_tx_string</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>string) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>uint8_t</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> (string[i]) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>uart_tx_char</span>(string[i<span style=color:#f92672>++</span>]);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>void</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>uart_tx_string</span>(<span style=color:#e6db74>&#34;beep</span><span style=color:#ae81ff>\r\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>delay_ms</span>(<span style=color:#ae81ff>1000</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><div class=nav-next-prev><div class=nav-prev><a href=https://daelon.net/posts/key_management/><i class="fas fa-chevron-left"></i></a></div><a class=nav-top href=#>top</i></a><div class=nav-next><a href=https://daelon.net/posts/vscode_extensions/><i class="fas fa-chevron-right"></i></a></div></div><div class=spacer></div><script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

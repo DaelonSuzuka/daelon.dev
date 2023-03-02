@@ -1,32 +1,13 @@
-<!doctype html><html><head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="some guy's technology blog">
-<meta name=Author content="Daelon Suzuka">
-<meta name=keywords content="hugo blog">
-<link rel=stylesheet href=https://daelon.net/css/syntax.css>
-<link rel=stylesheet href=https://daelon.net/css/style.css>
-<title>daelon.net</title>
-<meta property="og:title" content="Godot Editor Settings and You: An Exercise in Pain Reduction">
-<meta property="og:description" content="Recommendations for a better overall experience">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://daelon.net/posts/godot_editor_settings/">
-<meta property="og:image" content="https://daelon.net/og_preview.png">
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<meta name=theme-color content="#ffffff">
-</head><body><aside id=sidenav>
-<header><svg id="avatar" href="https://daelon.net"/></svg>
-<script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],['Technology is a word that describes something that doesn’t work yet',27],['People who are really serious about software should make their own hardware',23]];function create_svg(){var a=Math.floor(Math.random()*quotes.length),b=quotes[a][1],c=quotes[a][0],d=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="some guy's technology blog"><meta name=Author content="Daelon Suzuka"><meta name=keywords content="hugo blog"><link rel=stylesheet href=https://daelon.net/css/syntax.css><link rel=stylesheet href=https://daelon.net/css/style.css><title>daelon.net</title><meta property="og:title" content="Godot Editor Settings and You: An Exercise in Pain Reduction"><meta property="og:description" content="Recommendations for a better overall experience"><meta property="og:type" content="article"><meta property="og:url" content="https://daelon.net/posts/godot_editor_settings/"><meta property="og:image" content="https://daelon.net/og_preview.png"><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><meta name=theme-color content="#ffffff"></head><body><aside id=sidenav><header><svg id="avatar" href="https://daelon.net"/></svg><script>var quotes=[["I thought what I'd do was I'd pretend I was one of those deaf-mutes",28],["Technology is a word that describes something that doesn’t work yet",27],["People who are really serious about software should make their own hardware",23]];function create_svg(){var e=Math.floor(Math.random()*quotes.length),t=quotes[e][1],n=quotes[e][0],s=`<svg viewBox="-180 -180 380 360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <path id="f" d="m123,0a123,123 0,0 1-246,0a123,123 0,0 1 246,0"/>
             <g fill="#2A7DAE">
                 <circle r="160"/>
                 <circle r="150" fill="#fff"/>
                 
-            <text font-size="${b}" font-stretch="condensed" font-family="Impact">
+            <text font-size="${t}" font-stretch="condensed" font-family="Impact">
                 <animateTransform type="rotate" from="360 0 0" to="0 0 0" dur="20s" attributeName="transform" repeatCount="indefinite"/>
                 <textPath xlink:href="#f">
-                    ${c}
+                    ${n}
                 </textPath>
             </text>
             
@@ -41,84 +22,23 @@
             <path d="m-20 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             <path d="m60 10c-17-14-27-14-44 0 6-25 37-25 44 0z"/>
             </g>
-        </svg>`;return d}document.getElementById("avatar").innerHTML=create_svg()</script>
-<a id=branding href=https://daelon.net/>
-daelon.net
-</a>
-</header>
-<nav>
-<a href=/>
-<span>home</span>
-</a>
-<a href=/posts/>
-<span>posts</span>
-</a>
-<a href=/gamedev>
-<span>gamedev</span>
-</a>
-<a href=/projects>
-<span>projects</span>
-</a>
-<a href=/scripts>
-<span>scripts</span>
-</a>
-<a href=/links>
-<span>links</span>
-</a>
-<a href=https://github.com/DaelonSuzuka target=_blank>
-<span>github</span>
-</a>
-<a href=/about>
-<span>about</span>
-</a>
-</nav>
-</aside>
-<main id=main>
-<a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a>
-<div class=content>
-<h1 id=title>Godot Editor Settings and You: An Exercise in Pain Reduction</h1>
-<nav id=TableOfContents></nav>
-<p>The Godot editor has a number of absolutely boneheaded default settings. Here&rsquo;s my recommendations for a better overall experience:</p>
-<p><del>Step one: Use an external text editor</del></p>
-<p>This just saves space:</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/inspector/horizontal_vector2_editing = true
-</code></pre><p>I often work on plugins, which means restarting the editor all time. This makes restarting suck less.</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/scene_tabs/restore_scenes_on_load = true
-</code></pre><p>These prevent the internal script editor from building a collection of every single script in your project:</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/files/open_dominant_script_on_scene_change = false
+        </svg>`;return s}document.getElementById("avatar").innerHTML=create_svg()</script><a id=branding href=https://daelon.net/>daelon.net</a></header><nav><a href=/><span>home</span></a>
+<a href=/posts/><span>posts</span></a>
+<a href=/gamedev><span>gamedev</span></a>
+<a href=/projects><span>projects</span></a>
+<a href=/scripts><span>scripts</span></a>
+<a href=/links><span>links</span></a>
+<a href=https://github.com/DaelonSuzuka target=_blank><span>github</span></a>
+<a href=/about><span>about</span></a></nav></aside><main id=main><a href=javascript:void(0) id=closebtn onclick=navToggle()><i class="fas fa-bars fa-lg"></i></a><div class=content><h1 id=title>Godot Editor Settings and You: An Exercise in Pain Reduction</h1><nav id=TableOfContents></nav><p>The Godot editor has a number of absolutely boneheaded default settings. Here&rsquo;s my recommendations for a better overall experience:</p><p><del>Step one: Use an external text editor</del></p><p>This just saves space:</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/inspector/horizontal_vector2_editing = true
+</code></pre><p>I often work on plugins, which means restarting the editor all time. This makes restarting suck less.</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>interface/scene_tabs/restore_scenes_on_load = true
+</code></pre><p>These prevent the internal script editor from building a collection of every single script in your project:</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/files/open_dominant_script_on_scene_change = false
 text_editor/files/restore_scripts_on_load = false
-</code></pre><p>This makes the editor (attempt) to reload things like tool and plugin scripts when you change them in a real text editor.</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/files/auto_reload_scripts_on_external_change = true
-</code></pre><p>These stop the blasted thing from opening the internal script editor when there&rsquo;s an error:</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/external/use_external_editor = true
-text_editor/external/exec_path = &quot;&quot;
-text_editor/external/exec_flags = &quot;&quot;
-</code></pre><p>These apply to LSP completions when using an external editor:</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/completion/add_type_hints = true
+</code></pre><p>This makes the editor (attempt) to reload things like tool and plugin scripts when you change them in a real text editor.</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/files/auto_reload_scripts_on_external_change = true
+</code></pre><p>These stop the blasted thing from opening the internal script editor when there&rsquo;s an error:</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/external/use_external_editor = true
+text_editor/external/exec_path = &#34;&#34;
+text_editor/external/exec_flags = &#34;&#34;
+</code></pre><p>These apply to LSP completions when using an external editor:</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>text_editor/completion/add_type_hints = true
 text_editor/completion/use_single_quotes = true
-</code></pre><p>These improve the LSP experience a little bit:</p>
-<pre tabindex=0><code class=language-gdresource data-lang=gdresource>network/language_server/show_native_symbols_in_editor = true
+</code></pre><p>These improve the LSP experience a little bit:</p><pre tabindex=0><code class=language-gdresource data-lang=gdresource>network/language_server/show_native_symbols_in_editor = true
 network/language_server/use_thread = true
-</code></pre>
-<div class=nav-next-prev>
-<div class=nav-prev>
-<a href=https://daelon.net/posts/vscode_extensions/><i class="fas fa-chevron-left"></i></a>
-</div>
-<a class=nav-top href=#>top</i></a>
-<div class=nav-next>
-<a href=https://daelon.net/posts/godot_layout_helpers/><i class="fas fa-chevron-right"></i></a>
-</div>
-</div>
-<div class=spacer></div>
-<script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script>
-</div><footer>
-<div class=footer-content>
-<div class=contact-info>
-<div class=footer-mail>
-<i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a> </div>
-</div>
-</div>
-</footer></main>
-</body>
-<script src=https://daelon.net/js/navbutton.js></script>
-</html>
+</code></pre><div class=nav-next-prev><div class=nav-prev><a href=https://daelon.net/posts/vscode_extensions/><i class="fas fa-chevron-left"></i></a></div><a class=nav-top href=#>top</i></a><div class=nav-next><a href=https://daelon.net/posts/godot_layout_helpers/><i class="fas fa-chevron-right"></i></a></div></div><div class=spacer></div><script src=https://utteranc.es/client.js repo=DaelonSuzuka/portfolio-site issue-term=pathname theme=github-dark crossorigin=anonymous async></script></div><footer><div class=footer-content><div class=contact-info><div class=footer-mail><i class="far fa-envelope"></i> <a href=mailto:daelonsuzuka@gmail.com>daelonsuzuka@gmail.com</a></div></div></div></footer></main></body><script src=https://daelon.net/js/navbutton.js></script></html>

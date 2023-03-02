@@ -7,17 +7,17 @@ description: Why is this not more popular?
 tags: ["git", "workflow"]
 ---
 
-# What's the Problem?
+## What's the Problem?
 
 Git branches are just a fact of life if you work on projects above a certain size: there's just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn't mean *always* mean pleasant, and I'm sure most of you have danced the Branch Shuffle enough times that you know exactly what I'm talking about.
 
 What if I told you there was a better way?
 
-# Enter, Git Worktrees
+## Enter, Git Worktrees
 
 Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn't disturb your existing branches, so there's no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.
 
-# Okay, But How Does It Work?
+## Okay, But How Does It Work?
 
 I was deeply surprised at how easy it was to set up. Here's my recommendation:
 
@@ -61,11 +61,11 @@ As promised, each branch is checked out into it's own folder. The `.git` file is
 
 The contents of `.git` simply tell the git executable that the actual git config folder is in `./.bare` instead of the usual `./.git`.
 
-# Now what?
+## Now what?
 
 Personally I open the individual branch folders with VSCode and proceed as usual, but if you like workspace files you could set up a multi-root workspace to open all the branches at once or whatever you want.
 
-# References
+## References
 
 Actual documentation:
 

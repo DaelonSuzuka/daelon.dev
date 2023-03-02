@@ -4,10 +4,15 @@
     {{else}}
     <div class="spacer"></div>
     {{end}}
+
     {{ with .Params.githubrepo}}
        github repository : <a href="{{.}}">{{.}}</a>
+    {{end}}
+
+    {{if .Param "toc"}}
+        {{.TableOfContents}}
     {{end}}  
-    {{.TableOfContents}}
+    
     {{.Content}}
     {{if ne .Section ""}}
     <div class="nav-next-prev">

@@ -32,7 +32,7 @@
     {{if .Site.Params.displayMicroBlog}}
     <div class="section"> 
         {{/*  <div class="section-title">μblog</div>   */}}
-        <div class="posts">
+        <div>
             {{ range where (where site.RegularPages "Type" "in" site.Params.microBlogSection) "Params.pinned" true }}
                 <div class="post">
                     <div class="meta pinned"> <i class="fas fa-thumbtack"></i> pinned </div>
@@ -47,10 +47,16 @@
                     {{if ne .Params.pinned nil}}
                         <div class="meta pinned"> <i class="fas fa-thumbtack"></i> pinned </div>
                     {{end}}
+                    <div class="post-title">
+                        <h1><a href= "{{ .RelPermalink}}">{{.Title}}</a></h1>
+                        <div class="meta post-footer">
+                            {{.Date.Format "Jan 2 2006 03:04 UTC-07"}}
+                        </div>
+                    </div>
                     <div class="post-content">
                         {{.Content}}
                     </div>
-                    <div class="meta post-footer"> <span>{{.Date.Format "Jan 2 2006 03:04 UTC-07"}}</span> <a href="{{.RelPermalink}}"><i class="fas fa-link"></i> link</a></div> 
+                    {{/*  <div class="meta post-footer"> <span>{{.Date.Format "Jan 2 2006 03:04 UTC-07"}}</span> <a href="{{.RelPermalink}}"><i class="fas fa-link"></i> link</a></div>   */}}
                 </div>
             {{ end }} 
         </div>

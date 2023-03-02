@@ -49,6 +49,10 @@ aside {
     transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+#avatar {
+    width: 100%
+}
+
 aside a {
     color:rgb(238, 238, 238);
 }

@@ -7,7 +7,7 @@ description: "Things that I think are worth sharing."
 
 Things that I think are worth sharing.
 
-## Blogs
+## Blogs and Articles
 
 [Casey Muratori][1a] - ( [Semantic Compression][1b], [Complexity and Granularity][1c] )
 
@@ -26,6 +26,9 @@ Things that I think are worth sharing.
 
 [3a]: https://dannorth.net/blog/
 [3b]: https://dannorth.net/2022/02/10/cupid-for-joyful-coding/
+
+
+[John Carmack On Inlined Code](http://number-none.com/blow/john_carmack_on_inlined_code.html)
 
 ## Tools
 

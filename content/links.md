@@ -30,6 +30,8 @@ Things that I think are worth sharing.
 
 [John Carmack On Inlined Code](http://number-none.com/blow/john_carmack_on_inlined_code.html)
 
+[Server Hardening Tools (As An Amateur)](https://www.openmymind.net/Server-Hardening-Tools-As-An-Amateur/)
+
 ## Tools
 
 [Unit Juggler][4a] - Particularly the [frequency conversion][4b] page

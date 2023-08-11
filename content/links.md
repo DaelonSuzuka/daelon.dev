@@ -34,10 +34,12 @@ Things that I think are worth sharing.
 
 ## Tools
 
-[Unit Juggler][4a] - Particularly the [frequency conversion][4b] page
+[Unit Juggler]([4a]) - Particularly the [frequency conversion]([4b]) page
 
 [4a]: https://www.unitjuggler.com
 [4b]: https://www.unitjuggler.com/frequency-conversion.html
+
+[USBTreeView](https://www.uwe-sieber.de/usbtreeview_e.html)
 
 ## Other Stuff
 

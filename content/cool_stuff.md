@@ -1,11 +1,11 @@
 ---
-title: "Links"
+title: "Cool Stuff"
 date: 2021-02-14T11:32:09-05:00
 draft: false
-description: "Things that I think are worth sharing."
+description: "Cool stuff from other people"
 ---
 
-Things that I think are worth sharing.
+Cool stuff from other people
 
 ## Blogs and Articles
 

@@ -26,3 +26,5 @@ https://code.visualstudio.com/api/references/vscode-api
 https://www.nicoespeon.com/en/2019/11/fix-vscode-extension-performance-issue/
 
 https://code.visualstudio.com/api/extension-capabilities/common-capabilities
+
+https://snyk.io/blog/vs-code-extension-building-auto-cicd-with-github-actions/

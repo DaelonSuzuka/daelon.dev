@@ -9,7 +9,7 @@ tags: ["git", "workflow"]
 
 ## What's the Problem?
 
-Git branches are just a fact of life if you work on projects above a certain size: there's just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn't mean *always* mean pleasant, and I'm sure most of you have danced the Branch Shuffle enough times that you know exactly what I'm talking about.
+Git branches are a fact of life if you work on projects above a certain size: there's just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn't mean *always* mean pleasant, and I'm sure most of you have danced the Branch Shuffle enough times that you know exactly what I'm talking about.
 
 What if I told you there was a better way?
 

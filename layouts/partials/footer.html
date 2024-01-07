@@ -1,20 +1,24 @@
 <footer>
-<div class="footer-content">
-{{if (or (isset .Site.Params "mail") (isset .Site.Params "phone") ) }}
-  <div class="contact-info">
-      {{with .Site.Params.mail}}
-          <div class="footer-mail">
-          <i class="far fa-envelope"></i> <a href="mailto:{{.}}">{{.}}</a> </div>
-      {{end}}
-      {{with .Site.Params.phone}}
-      <div class="footer-phone">
-          <i class="fas fa-phone"></i> {{.}} 
-      </div>
-      {{end}}
-  </div>
-{{end}}
-{{with .Site.Copyright}}
-<p class="copyright meta">{{.}}</p>
-{{end}}
-</div>
+    <div class="footer-content">
+        <div class="contact-info">
+            <a href="https://github.com/DaelonSuzuka">
+                <img src="https://img.shields.io/badge/DaelonSuzuka-2ea44f?logo=github" alt="DaelonSuzuka">
+            </a>
+        </div>
+        <div class="contact-info">
+            <a href="https://ko-fi.com/daelon">
+                <img src="https://img.shields.io/badge/daelon-blue?logo=kofi" alt="daelon">
+            </a>
+        </div>
+        <div class="contact-info">
+            <a href="https://daelon.itch.io/">
+                <img src="https://img.shields.io/badge/daelon-gray?logo=itch.io" alt="daelon">
+            </a>
+        </div>
+        <div class="contact-info">
+            <a href="https://www.linkedin.com/in/daelonsuzuka/">
+                <img src="https://img.shields.io/badge/David_Kincaid-blue?logo=linkedin" alt="David Kincaid">
+            </a>
+        </div>
+    </div>
 </footer>

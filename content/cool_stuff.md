@@ -7,6 +7,10 @@ description: "Cool stuff from other people"
 
 Cool stuff from other people
 
+## Projects
+
+[Cyber](https://cyberscript.dev/) - A fast embeddable scripting language
+
 ## Blogs and Articles
 
 [Casey Muratori][1a] - ( [Semantic Compression][1b], [Complexity and Granularity][1c] )

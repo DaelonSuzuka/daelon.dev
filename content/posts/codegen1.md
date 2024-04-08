@@ -1,5 +1,5 @@
 ---
-title: "Code Generation: How bad is it, really?"
+title: "Code Generation Case Study: Firmware Configuration"
 date: 2024-04-06T17:09:32-04:00
 draft: true
 type: "posts"
@@ -9,9 +9,9 @@ tags: ["embedded", "C", "Python", "codegen"]
 
 Much has been written about the evils of code generation: it's been described as an anti-pattern, a maintenance nightmare, and a nuclear option. 
 
-One situation where it has repeatedly proven to be a net positive is configuration management in embedded systems. 
+One situation where it has repeatedly proven to be a net positive is configuration management in embedded systems. Firmware 
 
-# The status quo
+## The status quo
 
 Here are some snippets from a real project. This is the section of code that defines human readable names for specific pins:
 
@@ -77,7 +77,7 @@ But what about five?
 
 Ten? Twenty?
 
-# Story Time: Scaling with the status quo
+## Story Time: Scaling with the status quo
 
 Imagine it's new product time: You get a schematic for the new board from the hardware team. You look it over and it's reasonably similar to one of the projects you've already been working on. You do the obvious thing: fork the most similar project and start modifying it. Plug the new MCU pinout into `hardware.h` as pin definitions. Modify the `port_init()` function in `hardware.c`.
 
@@ -99,14 +99,18 @@ ANSELA = 0b00000110;
 
 A stupid typo. Annoyed, you recompile and upload the hex. Amazingly, the ADC works better when it's actually enabled in the GPIO registers. 
 
-# I mean, it's one typo. What could it cost?
+## I mean, it's one typo, Michael. What could it cost?
 
 This is a true story. It's happened to me more times than I want to admit, and it's probably happened to you. In my experience, there are two reasons why this simple typo hits so hard:
 
-### (Lack of a) Single Source of Truth
+#### (Lack of a) Single Source of Truth
 
 In the original configuration example, changing something about a pin requires making changes in multiple places in multiple files. The changes also aren't all in a standardized format. Deciding to change a pin from a digital output to an analog input could easily require 5, 6, 7 edits. It's very difficult to [make the wrong code look wrong](https://www.joelonsoftware.com/2005/05/11/making-wrong-code-look-wrong/) with this kind of setup.
 
-### Temporal Distance
+#### Temporal Distance
 
 Unless you can test *every* subsystem in your processor in a single day, there's going to be some delay between when you do the inital setup and when you can start writing code that targets a given peripheral. This creates a gap between when the error happens and when it's possible to detect it. All the deep context from when you first wrote the setup code is gone, and your debugging efforts have to start from a blank page. In this situation, even simple typos can punch WAY above their weight.
+
+## A better way?
+
+An ideal solution to this problem solves the above problems, plus a few more things. We want a single source of truth, of course.

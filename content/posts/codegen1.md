@@ -7,7 +7,10 @@ description: ""
 tags: ["embedded", "C", "Python", "codegen"]
 ---
 
-This article is part 1 in a series exploring use cases for code generation systems.
+This article is part 1 in a series exploring code generation systems.
+
+1. Case Study: Firmware Configuration
+2. Case Study: Message Decoding (coming soon)
 
 Configuration management in embedded systems is a difficult problem. The projects are often resource contrained, and the languages and tools are... not usually modern. It's rather common to have a series of products built on a common platform (same microcontroller(MCU), shared libraries), but different hardware configurations. Sharing code between projects is a valuable time/effort saver, but it's non-trivial to correctly abstract away model-specific details like the exact layout of the MCU's pins. 
 

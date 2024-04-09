@@ -114,7 +114,7 @@ In the original configuration example, changing something about a pin requires m
 
 Unless you can test *every* subsystem in your processor in a single day, there's going to be some delay between when you do the inital setup and when you can start writing code that targets a given peripheral. This creates a gap between when the error happens and when it's possible to detect it. All the deep context from when you first wrote the setup code is gone, and your debugging efforts have to start from a blank page. In this situation, even simple typos can punch WAY above their weight.
 
-## There must be a better way!
+## There Must be a Better Way!
 
 An ideal solution fixes the above problems, plus a few more:
 

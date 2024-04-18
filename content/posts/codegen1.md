@@ -348,7 +348,7 @@ A numeric channel ID is required to initialize an ADC read, so generated helper 
 #define ADC_KNOB_TWO_PIN 9
 ```
 
-### Full `pins.h`
+### Full Generated Output
 
 The full header, if you want to see everything together:
 

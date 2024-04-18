@@ -139,8 +139,20 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>/*[[[cog
-</span></span></span><span style=display:flex><span><span style=color:#75715e>import cog
+</span></span></span><span style=display:flex><span><span style=color:#75715e>import cog # Cog actually imports this automatically!
+</span></span></span><span style=display:flex><span><span style=color:#75715e>cog.outl(&#34;Hello world!&#34;) # cog.outl() inserts its output after the block
+</span></span></span><span style=display:flex><span><span style=color:#75715e>]]]*/</span>
+</span></span><span style=display:flex><span>Hello world<span style=color:#f92672>!</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//[[[end]]]
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/*[[[cog
 </span></span></span><span style=display:flex><span><span style=color:#75715e>fnames = [&#39;DoSomething&#39;, &#39;DoAnotherThing&#39;, &#39;DoLastThing&#39;]
 </span></span></span><span style=display:flex><span><span style=color:#75715e>for fn in fnames:
 </span></span></span><span style=display:flex><span><span style=color:#75715e>    cog.outl(&#34;void %s();&#34; % fn)
@@ -149,7 +161,21 @@
 </span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>DoAnotherThing</span>();
 </span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>DoLastThing</span>();
 </span></span><span style=display:flex><span><span style=color:#75715e>//[[[end]]]
-</span></span></span></code></pre></td></tr></table></div></div><p>Cog doesn&rsquo;t modify the file if the output hasn&rsquo;t changed, so it&rsquo;s <code>make</code> friendly. The generated code can be mixed with handwritten code, and is checked directly into version control, so it&rsquo;s explorable and discoverable, and your IDE/tools can navigate it directly.</p><h2 id=pin-definition-format>Pin Definition Format</h2><p>The following file is the custom format for pin definitions. It&rsquo;s designed to minimize write/edit friction and maximize reviewability. The intended usage is to reference the schematic, and match each pin on the schematic with its definition in the configuration. Any data entry errors should be trivially discoverable by stepping through the config line-by-line.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span></span></span></code></pre></td></tr></table></div></div><p>Cog doesn&rsquo;t modify the file if the output hasn&rsquo;t changed, so it&rsquo;s <code>make</code> friendly. The generated code can be mixed with handwritten code, and is checked directly into version control, so it&rsquo;s explorable and discoverable, and your IDE/tools can navigate it directly.</p><h2 id=pin-definition-format>Pin Definition Format</h2><p>The following file is the custom format for pin definitions. It&rsquo;s designed to minimize write/edit friction and maximize reviewability. The intended usage is to reference the schematic, and match each pin on the schematic with its definition in the configuration. Any data entry errors should be trivially discoverable by stepping through the config line-by-line.</p><p>A pin is defined by 3 elements, a PIN_ID, a PIN_NAME, and a list of tags. The PIN_ID is the pin&rsquo;s identifier in the hardware/datasheet. The PIN_NAME should be human-readable, and is used to generate the macros and functions. The list of tags describes what features you want enabled on that pin.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span><span style=color:#75715e># Pin definition format:</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># &#39;PIN_ID&#39;: (&#39;PIN_NAME&#39;, [&#39;list&#39;, &#39;of&#39;, &#39;tags&#39;])</span>
+</span></span><span style=display:flex><span>common <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A0&#39;</span>: <span style=color:#66d9ef>None</span>, <span style=color:#75715e># pins can be left undefined</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A2&#39;</span>: (<span style=color:#e6db74>&#39;ONE_BUTTON_PIN&#39;</span>, [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>, <span style=color:#e6db74>&#39;button&#39;</span>]),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A7&#39;</span>: (<span style=color:#e6db74>&#39;RED_LED_PIN&#39;</span>, [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]),
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>The <code>Pin</code> class is at the top of <code>pinmap.py</code>, and functions as both a reference for the available tags, as well as a helpful shortcut for commonly used tag groups.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -167,121 +193,225 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Pin</span>:
-</span></span><span style=display:flex><span>    <span style=color:#75715e># possible pin functions</span>
-</span></span><span style=display:flex><span>    tags <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;tristate&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>, <span style=color:#e6db74>&#39;analog&#39;</span>, <span style=color:#e6db74>&#39;pullup&#39;</span>, <span style=color:#e6db74>&#39;button&#39;</span>, <span style=color:#e6db74>&#39;pps&#39;</span>]
+</span></span><span style=display:flex><span>    <span style=color:#75715e># possible pin functions (this is just here for reference)</span>
+</span></span><span style=display:flex><span>    tags <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#75715e># initial pin direction</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;gpio&#39;</span>, <span style=color:#75715e># generate GPIO utility functions</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;tristate&#39;</span>, <span style=color:#75715e># pin direction will be changed at runtime</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;analog&#39;</span>, <span style=color:#75715e># generate ADC helpers</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;pullup&#39;</span>, <span style=color:#75715e># enable the pullup resistor</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;button&#39;</span>, <span style=color:#75715e># pin is used by the button debouncer</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;pps&#39;</span> <span style=color:#75715e># generate pin remapping helpers</span>
+</span></span><span style=display:flex><span>    ]
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#75715e># shortcuts, common groups of functions</span>
 </span></span><span style=display:flex><span>    button <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>, <span style=color:#e6db74>&#39;button&#39;</span>]
-</span></span><span style=display:flex><span>    led <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]
+</span></span><span style=display:flex><span>    digital_out <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]
+</span></span><span style=display:flex><span>    analog_in <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;analog&#39;</span>]
 </span></span><span style=display:flex><span>    uart_tx <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;pps&#39;</span>]
 </span></span><span style=display:flex><span>    uart_rx <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;pps&#39;</span>]
-</span></span><span style=display:flex><span>    analog_in <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;analog&#39;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># a pin definition is:</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># &lt;pin ID&gt;: (&lt;pin name&gt;, [list of pin tags])</span>
+</span></span></code></pre></td></tr></table></div></div><p>Here&rsquo;s an example pinmap with a variety of features being used:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span><span style=color:#75715e># format: &#39;PIN_ID&#39;: (&#39;PIN_NAME&#39;, [&#39;list&#39;, &#39;of&#39;, &#39;tags&#39;])</span>
 </span></span><span style=display:flex><span>common <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>    <span style=color:#75715e># port A</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A0&#39;</span>: (<span style=color:#e6db74>&#39;FWD_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>analog_in), <span style=color:#75715e># use the premade tag groups</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A1&#39;</span>: (<span style=color:#e6db74>&#39;REV_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>analog_in), <span style=color:#75715e># Pin.analog_in == [&#39;input&#39;, &#39;analog&#39;]</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A2&#39;</span>: (<span style=color:#e6db74>&#39;POWER_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>led), <span style=color:#75715e># Pin.led == [&#39;output&#39;, &#39;gpio&#39;]</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A3&#39;</span>: (<span style=color:#e6db74>&#39;POWER_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A4&#39;</span>: (<span style=color:#e6db74>&#39;CDN_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A5&#39;</span>: (<span style=color:#e6db74>&#39;LUP_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A6&#39;</span>: (<span style=color:#e6db74>&#39;FP_CLOCK_PIN&#39;</span>, [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]), <span style=color:#75715e># or directly specify tags</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A7&#39;</span>: (<span style=color:#e6db74>&#39;RADIO_CMD_PIN&#39;</span>, [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]),
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Buttons</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A2&#39;</span>: (<span style=color:#e6db74>&#39;ONE_BUTTON_PIN&#39;</span>, [<span style=color:#e6db74>&#39;input&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>, <span style=color:#e6db74>&#39;button&#39;</span>]), <span style=color:#75715e># specify tags</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A3&#39;</span>: (<span style=color:#e6db74>&#39;TWO_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button), <span style=color:#75715e># or use the premade tag groups</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># port B</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B0&#39;</span>: <span style=color:#66d9ef>None</span>, <span style=color:#75715e># pins don&#39;t have to be defined</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B1&#39;</span>: (<span style=color:#e6db74>&#39;ANT_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>led),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B2&#39;</span>: (<span style=color:#e6db74>&#39;CUP_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B3&#39;</span>: <span style=color:#66d9ef>None</span>,
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B4&#39;</span>: (<span style=color:#e6db74>&#39;FUNC_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B5&#39;</span>: (<span style=color:#e6db74>&#39;LDN_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B6&#39;</span>: <span style=color:#66d9ef>None</span>,
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B7&#39;</span>: <span style=color:#66d9ef>None</span>,
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Individual LEDs</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A5&#39;</span>: (<span style=color:#e6db74>&#39;GREEN_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A6&#39;</span>: (<span style=color:#e6db74>&#39;YELLOW_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out), 
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;A7&#39;</span>: (<span style=color:#e6db74>&#39;RED_LED_PIN&#39;</span>, [<span style=color:#e6db74>&#39;output&#39;</span>, <span style=color:#e6db74>&#39;gpio&#39;</span>]),
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># port C</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C0&#39;</span>: (<span style=color:#e6db74>&#39;RELAY_CLOCK_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>led),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C1&#39;</span>: (<span style=color:#e6db74>&#39;RELAY_DATA_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>led),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C2&#39;</span>: (<span style=color:#e6db74>&#39;RELAY_STROBE_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>led),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C3&#39;</span>: (<span style=color:#e6db74>&#39;BYPASS_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>relay),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C4&#39;</span>: (<span style=color:#e6db74>&#39;FP_STROBE_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>relay),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C5&#39;</span>: (<span style=color:#e6db74>&#39;FP_DATA_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>relay),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C6&#39;</span>: (<span style=color:#e6db74>&#39;USB_TX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_tx),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C7&#39;</span>: (<span style=color:#e6db74>&#39;USB_RX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_rx),
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Analog inputs</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B0&#39;</span>: (<span style=color:#e6db74>&#39;KNOB_ONE_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>analog_in),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B1&#39;</span>: (<span style=color:#e6db74>&#39;KNOB_TWO_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>analog_in),
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># port E</span>
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;E0&#39;</span>: (<span style=color:#e6db74>&#39;FREQ_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>freq),
+</span></span><span style=display:flex><span>    <span style=color:#75715e># LED Bargraph -bitbang SPI</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C3&#39;</span>: (<span style=color:#e6db74>&#39;BARGRAPH_CLOCK_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;C5&#39;</span>: (<span style=color:#e6db74>&#39;BARGRAPH_DATA_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;E0&#39;</span>: (<span style=color:#e6db74>&#39;BARGRAPH_STROBE_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># LCD - bitbang serial</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D2&#39;</span>: (<span style=color:#e6db74>&#39;LCD_TX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># RGB LED - common cathode, active high</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D5&#39;</span>: (<span style=color:#e6db74>&#39;RGB_1_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D6&#39;</span>: (<span style=color:#e6db74>&#39;RGB_2_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D7&#39;</span>: (<span style=color:#e6db74>&#39;RGB_3_LED_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>digital_out),
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># USB uart</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;F6&#39;</span>: (<span style=color:#e6db74>&#39;USB_TX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_tx),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;F7&#39;</span>: (<span style=color:#e6db74>&#39;USB_RX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_rx),
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># The toolchain supports development and release builds, and the following two</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># pin dictionaries are merged with the common dictionary to create the full</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># configuration for each mode.</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># This allows for using different hardware for dev and release, driven by a single</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># declarative configuration</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>development <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D2&#39;</span>: (<span style=color:#e6db74>&#39;DEBUG_TX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_tx),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;D3&#39;</span>: (<span style=color:#e6db74>&#39;DEBUG_RX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_rx),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;E1&#39;</span>: (<span style=color:#e6db74>&#39;TUNE_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;E2&#39;</span>: (<span style=color:#e6db74>&#39;ANT_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
+</span></span></code></pre></td></tr></table></div></div><p>The toolchain supports development and release builds, and the following two pin dictionaries are merged with the common dictionary to create the full configuration for each mode.</p><p>This allows for using different hardware for dev and release, driven by a single declarative configuration</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span>development <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e># the debug serial port is only available on development builds</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B6&#39;</span>: (<span style=color:#e6db74>&#39;DEBUG_TX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_tx),
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B7&#39;</span>: (<span style=color:#e6db74>&#39;DEBUG_RX_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>uart_rx),
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>release <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B6&#39;</span>: (<span style=color:#e6db74>&#39;TUNE_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;B7&#39;</span>: (<span style=color:#e6db74>&#39;ANT_BUTTON_PIN&#39;</span>, Pin<span style=color:#f92672>.</span>button),
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div><h2 id=generated-code>Generated Code</h2><p>This is the header file <code>pins.h</code>, which is the project&rsquo;s central location for pin stuff.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span></span></code></pre></td></tr></table></div></div><h2 id=generated-code>Generated Code</h2><p>Let&rsquo;s go over the generated <code>pin.h</code> section by section, starting with the Cog block that&rsquo;s doing all the work. This block is what&rsquo;s actually executed by running Cog, and it imports some python libraries that are tucked away in the toolchain directory (these will be explored at a later date).</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>/* [[[cog
+</span></span></span><span style=display:flex><span><span style=color:#75715e>    from codegen import fmt; import pins
+</span></span></span><span style=display:flex><span><span style=color:#75715e>    cog.outl(fmt(pins.pin_declarations()))
+</span></span></span><span style=display:flex><span><span style=color:#75715e>]]] */</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// &lt;generated code goes here&gt;
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// [[[end]]]
+</span></span></span></code></pre></td></tr></table></div></div><p>Here&rsquo;s an easier to read version, if you prefer:</p><details><summary>Expand me</summary><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> codegen <span style=color:#f92672>import</span> fmt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pins
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> cog <span style=color:#75715e># im</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># parse pinmap.py and return a string containing the C code we want</span>
+</span></span><span style=display:flex><span>raw_output <span style=color:#f92672>=</span> pins<span style=color:#f92672>.</span>pin_declarations()
+</span></span><span style=display:flex><span><span style=color:#75715e># format the C code using clang-format so it matches the project</span>
+</span></span><span style=display:flex><span>formatted_output <span style=color:#f92672>=</span> fmt(raw_output)
+</span></span><span style=display:flex><span><span style=color:#75715e># insert the formatted code after the Cog block</span>
+</span></span><span style=display:flex><span>cog<span style=color:#f92672>.</span>outl(formatted_output)
+</span></span></code></pre></td></tr></table></div></div></details><h3 id=gpio-helper-functions>GPIO Helper Functions</h3><p>The next section is GPIO related utility functions. These functions use the human readable pin names, and are only created for pins that are marked as requiring specific functionality. This hides the details of which functions are on which pins from the rest of your application, and also tricks the compiler into helping detect configuration errors.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// GPIO read functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_ONE_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_TWO_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO write functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_GREEN_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_YELLOW_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RED_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_LCD_TX_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_1_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_2_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_3_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO direction functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// none
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=button-subsytem>Button Subsytem</h3><p>I use a standard button debouncing system in most of my projects, an evolution of <a href=https://hackaday.com/2015/12/09/embed-with-elliot-debounce-your-noisy-buttons-part-i/>this one</a> described by Elliot Williams at Hackaday. A 5ms timer triggers an interrupt service routine(ISR), which scans all the buttons in the system. The system tracks the recent history of each button, allowing it to ignore button noise and detect 4 distinct input states: UP, DOWN, PRESSED (rising edge), and RELEASED (falling edge).</p><p>The generated array <code>buttonFunctions</code> is used in the ISR to scan each button in a loop. The enum of the button names allows us to have a clean API for checking button state from application code: <code>is_btn_down(ONE)</code>, <code>is_btn_pressed(TWO)</code>, etc.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// Button stuff
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define NUMBER_OF_BUTTONS 2
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>typedef</span> <span style=color:#a6e22e>bool</span> (<span style=color:#f92672>*</span><span style=color:#66d9ef>button_function_t</span>)(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// array of pointers to button reading functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>button_function_t</span> buttonFunctions[NUMBER_OF_BUTTONS];
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// enum of button names
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>enum</span> {
+</span></span><span style=display:flex><span>    ONE,
+</span></span><span style=display:flex><span>    TWO,
+</span></span><span style=display:flex><span>} button_names;
+</span></span></code></pre></td></tr></table></div></div><h3 id=pin-remapping>Pin Remapping</h3><p>This family of microcontrollers allows remapping internal peripherals to different pin using a module called the Peripheral Pin Select, or PPS. Using these helpers to initialize the PPS system ensures peripherals are always routed to the correct locations.</p><p>Also note the presence of <code>#ifdef DEVELOPMENT</code>, allowing the system to switch between development and release mode by simply adding or removing the <code>-DDEVELOPMENT</code> compiler flag.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// PPS Pin initialization macros
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define PPS_LCD_RX_PIN PPS_INPUT(D, 3)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_USB_TX_PIN PPS_OUTPUT(F, 6)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_USB_RX_PIN PPS_INPUT(F, 7)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_DEBUG_RX_PIN PPS_INPUT(B, 6)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#endif
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_DEBUG_TX_PIN PPS_OUTPUT(B, 7)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#endif
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=analog-helpers>Analog Helpers</h3><p>A numeric channel ID is required to initialize an ADC read, so generated helper macros make sure the correct channels are always being used.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// ADC Channel Select macros
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define ADC_KNOB_ONE_PIN 8
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define ADC_KNOB_TWO_PIN 9
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=full-pinsh>Full <code>pins.h</code></h3><p>The full header, if you want to see everything together:</p><details><summary>Expand me</summary><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -340,53 +470,34 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>#ifndef _PINS_H_
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#define _PINS_H_
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;peripherals/pps.h&#34;</span><span style=color:#75715e>
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;stdbool.h&gt;</span><span style=color:#75715e>
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>/* ************************************************************************** */</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>/* [[[cog
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>/* [[[cog
 </span></span></span><span style=display:flex><span><span style=color:#75715e>    from codegen import fmt; import pins
 </span></span></span><span style=display:flex><span><span style=color:#75715e>    cog.outl(fmt(pins.pin_declarations()))
 </span></span></span><span style=display:flex><span><span style=color:#75715e>]]] */</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// GPIO read functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_POWER_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_CDN_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_LUP_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_CUP_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_FUNC_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_LDN_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_FREQ_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_TUNE_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_ANT_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_ONE_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_TWO_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO write functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_GREEN_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_YELLOW_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RED_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_LCD_TX_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_1_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_2_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_3_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO direction functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// none
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/* -------------------------------------------------------------------------- */</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// Button stuff
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define NUMBER_OF_BUTTONS 8
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define NUMBER_OF_BUTTONS 2
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// array of pointers to button reading functions
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>typedef</span> <span style=color:#a6e22e>bool</span> (<span style=color:#f92672>*</span><span style=color:#66d9ef>button_function_t</span>)(<span style=color:#66d9ef>void</span>);
@@ -394,56 +505,31 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// enum of button names
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>enum</span> {
-</span></span><span style=display:flex><span>    POWER,
-</span></span><span style=display:flex><span>    CDN,
-</span></span><span style=display:flex><span>    LUP,
-</span></span><span style=display:flex><span>    CUP,
-</span></span><span style=display:flex><span>    FUNC,
-</span></span><span style=display:flex><span>    LDN,
-</span></span><span style=display:flex><span>    TUNE,
-</span></span><span style=display:flex><span>    ANT,
+</span></span><span style=display:flex><span>    ONE,
+</span></span><span style=display:flex><span>    TWO,
 </span></span><span style=display:flex><span>} button_names;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO write functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_POWER_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RADIO_CMD_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_ANT_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BYPASS_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO direction functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_BYPASS_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_FP_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_FP_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value);
+</span></span><span style=display:flex><span><span style=color:#75715e>/* -------------------------------------------------------------------------- */</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// PPS Pin initialization macros
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define PPS_USB_TX_PIN PPS_OUTPUT(C, 6)
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_USB_RX_PIN PPS_INPUT(C, 7)
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_FREQ_PIN PPS_INPUT(E, 0)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define PPS_LCD_RX_PIN PPS_INPUT(D, 3)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_USB_TX_PIN PPS_OUTPUT(F, 6)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_USB_RX_PIN PPS_INPUT(F, 7)
 </span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>#define PPS_DEBUG_TX_PIN PPS_OUTPUT(D, 2)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_DEBUG_RX_PIN PPS_INPUT(B, 6)
 </span></span></span><span style=display:flex><span><span style=color:#75715e>#endif
 </span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>#define PPS_DEBUG_RX_PIN PPS_INPUT(D, 3)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define PPS_DEBUG_TX_PIN PPS_OUTPUT(B, 7)
 </span></span></span><span style=display:flex><span><span style=color:#75715e>#endif
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/* -------------------------------------------------------------------------- */</span>
+</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// ADC Channel Select macros
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define ADC_FWD_PIN 0
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#define ADC_REV_PIN 1
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#define ADC_KNOB_ONE_PIN 8
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define ADC_KNOB_TWO_PIN 9
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// [[[end]]]
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>/* ************************************************************************** */</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>extern</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>pins_init</span>(<span style=color:#66d9ef>void</span>);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif </span><span style=color:#75715e>/* _PINS_H_ */</span><span style=color:#75715e>
-</span></span></span></code></pre></td></tr></table></div></div><p>And the matching <code>pins.c</code> (long, only added for completeness):</p><details><summary>Expand me</summary><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span></span></span></code></pre></td></tr></table></div></div></details><p>And the full source file. It&rsquo;s essentially just the matching implementation of the header.</p><details><summary>Expand me</summary><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
@@ -557,69 +643,6 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;pins.h&#34;</span><span style=color:#75715e>
 </span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;peripherals/pic_header.h&#34;</span><span style=color:#75715e>
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
@@ -630,57 +653,31 @@
 </span></span></span><span style=display:flex><span><span style=color:#75715e>]]] */</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// GPIO read functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_POWER_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTAbits.RA3; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_CDN_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTAbits.RA4; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_LUP_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTAbits.RA5; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_CUP_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTBbits.RB2; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_FUNC_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTBbits.RB4; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_LDN_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTBbits.RB5; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_FREQ_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTEbits.RE0; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_TUNE_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) {
-</span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> PORTEbits.RE1;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> PORTBbits.RB6;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_ANT_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) {
-</span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> PORTEbits.RE2;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> PORTBbits.RB7;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_ONE_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTAbits.RA2; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>read_TWO_BUTTON_PIN</span>(<span style=color:#66d9ef>void</span>) { <span style=color:#66d9ef>return</span> PORTAbits.RA3; }
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO write functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_GREEN_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA5 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_YELLOW_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA6 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RED_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA7 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC3 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_MISO_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC4 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC5 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_LCD_TX_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATDbits.LATD2 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_1_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATDbits.LATD5 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_2_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATDbits.LATD6 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RGB_3_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATDbits.LATD7 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BARGRAPH_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATEbits.LATE0 <span style=color:#f92672>=</span> value; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO direction functions
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// none
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// Button stuff
 </span></span></span><span style=display:flex><span><span style=color:#75715e>// array of pointers to button reading functions
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>button_function_t</span> buttonFunctions[NUMBER_OF_BUTTONS] <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>    read_POWER_BUTTON_PIN, <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_CDN_BUTTON_PIN,   <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_LUP_BUTTON_PIN,   <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_CUP_BUTTON_PIN,   <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_FUNC_BUTTON_PIN,  <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_LDN_BUTTON_PIN,   <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_TUNE_BUTTON_PIN,  <span style=color:#75715e>//
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_ANT_BUTTON_PIN,   <span style=color:#75715e>//
+</span></span><span style=display:flex><span>    read_ONE_BUTTON_PIN, <span style=color:#75715e>//
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    read_TWO_BUTTON_PIN, <span style=color:#75715e>//
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>};
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO write functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_POWER_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA2 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA6 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RADIO_CMD_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATAbits.LATA7 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_ANT_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATBbits.LATB1 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_CLOCK_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC0 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC1 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_RELAY_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC2 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_BYPASS_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC3 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC4 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_FP_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value) { LATCbits.LATC5 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// GPIO direction functions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_BYPASS_LED_PIN</span>(<span style=color:#66d9ef>bool</span> value) { TRISCbits.TRISC3 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_FP_STROBE_PIN</span>(<span style=color:#66d9ef>bool</span> value) { TRISCbits.TRISC4 <span style=color:#f92672>=</span> value; }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>set_tris_FP_DATA_PIN</span>(<span style=color:#66d9ef>bool</span> value) { TRISCbits.TRISC5 <span style=color:#f92672>=</span> value; }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// [[[end]]]
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
@@ -691,113 +688,76 @@
 </span></span></span><span style=display:flex><span><span style=color:#75715e>]]] */</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>pins_init</span>(<span style=color:#66d9ef>void</span>) {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FWD_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    ANSELAbits.ANSELA0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// ONE_BUTTON_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    WPUAbits.WPUA2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// REV_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    ANSELAbits.ANSELA1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// POWER_LED_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// POWER_BUTTON_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// TWO_BUTTON_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA3 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>    WPUAbits.WPUA3 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// CDN_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA4 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    WPUAbits.WPUA4 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// GREEN_LED_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// LUP_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    WPUAbits.WPUA5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FP_CLOCK_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// YELLOW_LED_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// RADIO_CMD_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// RED_LED_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISAbits.TRISA7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// ANT_LED_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// KNOB_ONE_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    ANSELBbits.ANSELB0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// CUP_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    WPUBbits.WPUB2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// KNOB_TWO_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    ANSELBbits.ANSELB1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FUNC_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB4 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    WPUBbits.WPUB4 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// LDN_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>    WPUBbits.WPUB5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// RELAY_CLOCK_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// RELAY_DATA_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// RELAY_STROBE_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// BYPASS_LED_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// BARGRAPH_CLOCK_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC3 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FP_STROBE_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// BARGRAPH_MISO_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC4 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FP_DATA_PIN
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// BARGRAPH_DATA_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// LCD_TX_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// LCD_RX_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD3 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// RGB_1_LED_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD5 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// RGB_2_LED_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// RGB_3_LED_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// BARGRAPH_STROBE_PIN
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISEbits.TRISE0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#75715e>// USB_TX_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISFbits.TRISF6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#75715e>// USB_RX_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISCbits.TRISC7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISFbits.TRISF7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// FREQ_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISEbits.TRISE0 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// DEBUG_TX_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// DEBUG_RX_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISDbits.TRISD3 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// TUNE_BUTTON_PIN
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISEbits.TRISE1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    WPUEbits.WPUE1 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    WPUBbits.WPUB6 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// ANT_BUTTON_PIN
+</span></span><span style=display:flex><span><span style=color:#75715e>// DEBUG_TX_PIN
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISEbits.TRISE2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#endif
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#ifdef DEVELOPMENT
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    WPUEbits.WPUE2 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>#else
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    WPUBbits.WPUB7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    TRISBbits.TRISB7 <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 </span></span><span style=display:flex><span><span style=color:#75715e>#endif
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
 </span></span><span style=display:flex><span><span style=color:#75715e>// [[[end]]]
-</span></span></span></code></pre></td></tr></table></div></div></details><h1 id=feature-overview-or-why-did-we-actually-do-all-this>Feature Overview, or: Why did we actually do all this?</h1><p>The implementation of the code generator is unremarkable(it&rsquo;s just strings in python), so we&rsquo;ll skip over that for now. Far more interesting is how many different firmware features are handled:</p><ul><li>function wrappers for all register access:<ul><li>GPIO read</li><li>GPIO write</li><li>GPIO direction set</li></ul></li><li>Button debouncing subsystem configuration:<ul><li>total button count</li><li>an array of function pointers to the GPIO read function for each button</li><li>an enum of the button names</li></ul></li><li>Peripheral Pin Select (PPS) macros, used to remap features to different pins</li><li>ADC Channel select macros</li><li>Supports dev/release mode, using <code>DEVELOPMENT</code> macro</li><li>Automatically regenerated when <code>pinmap.py</code> is changed</li></ul><p>This code generation system was directly responsible for reducing new project setup time from days (and a long tail of errors that lasted weeks) to approximately 30 minutes. I was able to get a new schematic from the hardware team, clone the most similar existing project, and have the new project compiled, running on hardware and responding to serial comms in 30 minutes, with no configuration timebombs waiting to derail me a month down the road.</p></div></div><div class=post><div class=post-title><h1><a href=/posts/git_worktrees/>Git Worktrees: The Best Kept Git Secret?</a></h1><div class="meta post-footer">Oct 3 2022 09:29 UTC-04</div></div><div class=post-content><h2 id=whats-the-problem>What&rsquo;s the Problem?</h2><p>Git branches are a fact of life if you work on projects above a certain size: there&rsquo;s just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn&rsquo;t mean <em>always</em> mean pleasant, and I&rsquo;m sure most of you have danced the Branch Shuffle enough times that you know exactly what I&rsquo;m talking about.</p><p>What if I told you there was a better way?</p><h2 id=enter-git-worktrees>Enter, Git Worktrees</h2><p>Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn&rsquo;t disturb your existing branches, so there&rsquo;s no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.</p><h2 id=okay-but-how-does-it-work>Okay, But How Does It Work?</h2><p>I was deeply surprised at how easy it was to set up. Here&rsquo;s my recommendation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></span></span></code></pre></td></tr></table></div></div></details><h1 id=feature-overview-or-why-did-we-actually-do-all-this>Feature Overview, or: Why did we actually do all this?</h1><p>The implementation of the code generator is unremarkable(it&rsquo;s just strings in python), so we&rsquo;ll skip over that for now. Far more interesting is how many different firmware features are handled:</p><ul><li>function wrappers for all register access:<ul><li>GPIO read</li><li>GPIO write</li><li>GPIO direction set</li></ul></li><li>automatic port initializing, making sure every pin is configured correctly</li><li>Button debouncing subsystem configuration:<ul><li>total button count</li><li>an array of function pointers to the GPIO read function for each button</li><li>an enum of the button names</li></ul></li><li>Peripheral Pin Select (PPS) macros, used to remap features to different pins</li><li>ADC Channel select macros</li><li>Supports dev/release mode, using <code>DEVELOPMENT</code> macro</li><li>Automatically regenerated when <code>pinmap.py</code> is changed</li></ul><p>This code generation system was directly responsible for reducing new project setup time from days (and a long tail of errors that lasted weeks) to approximately 30 minutes. I was able to get a new schematic from the hardware team, clone the most similar existing project, and have the new project compiled, running on hardware and responding to serial comms in 30 minutes, with no configuration timebombs waiting to derail me a month down the road.</p></div></div><div class=post><div class=post-title><h1><a href=/posts/git_worktrees/>Git Worktrees: The Best Kept Git Secret?</a></h1><div class="meta post-footer">Oct 3 2022 09:29 UTC-04</div></div><div class=post-content><h2 id=whats-the-problem>What&rsquo;s the Problem?</h2><p>Git branches are a fact of life if you work on projects above a certain size: there&rsquo;s just no other (good) way to scale and coordinate effort from multiple programmers on one codebase. Unfortunately, mandatory doesn&rsquo;t mean <em>always</em> mean pleasant, and I&rsquo;m sure most of you have danced the Branch Shuffle enough times that you know exactly what I&rsquo;m talking about.</p><p>What if I told you there was a better way?</p><h2 id=enter-git-worktrees>Enter, Git Worktrees</h2><p>Git worktrees allow you to have as many branches as you want checked out at the same time. Each branch can be staged, pushed, pulled, and reverted independently. Checking out a new branch is a single command and doesn&rsquo;t disturb your existing branches, so there&rsquo;s no need to hurridly commit your in-progress work or stash your working set with a non-descriptive name when you recieve that Priority 1++++ bug report in the middle of lunch.</p><h2 id=okay-but-how-does-it-work>Okay, But How Does It Work?</h2><p>I was deeply surprised at how easy it was to set up. Here&rsquo;s my recommendation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4

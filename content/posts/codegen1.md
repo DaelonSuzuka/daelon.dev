@@ -131,7 +131,13 @@ What I eventually settled on was Python scripts as part of my toolchain, using a
 
 ```c
 /*[[[cog
-import cog
+import cog # Cog actually imports this automatically!
+cog.outl("Hello world!") # cog.outl() inserts its output after the block
+]]]*/
+Hello world!
+//[[[end]]]
+
+/*[[[cog
 fnames = ['DoSomething', 'DoAnotherThing', 'DoLastThing']
 for fn in fnames:
     cog.outl("void %s();" % fn)
@@ -148,105 +154,234 @@ Cog doesn't modify the file if the output hasn't changed, so it's `make` friendl
 
 The following file is the custom format for pin definitions. It's designed to minimize write/edit friction and maximize reviewability. The intended usage is to reference the schematic, and match each pin on the schematic with its definition in the configuration. Any data entry errors should be trivially discoverable by stepping through the config line-by-line.
 
+A pin is defined by 3 elements, a PIN_ID, a PIN_NAME, and a list of tags. The PIN_ID is the pin's identifier in the hardware/datasheet. The PIN_NAME should be human-readable, and is used to generate the macros and functions. The list of tags describes what features you want enabled on that pin.
+
+```py
+# Pin definition format:
+# 'PIN_ID': ('PIN_NAME', ['list', 'of', 'tags'])
+common = {
+    'A0': None, # pins can be left undefined
+    'A2': ('ONE_BUTTON_PIN', ['input', 'gpio', 'button']),
+    'A7': ('RED_LED_PIN', ['output', 'gpio']),
+}
+```
+
+The `Pin` class is at the top of `pinmap.py`, and functions as both a reference for the available tags, as well as a helpful shortcut for commonly used tag groups.
+
 ```py
 class Pin:
-    # possible pin functions
-    tags = ['input', 'output', 'tristate', 'gpio', 'analog', 'pullup', 'button', 'pps']
+    # possible pin functions (this is just here for reference)
+    tags = [
+        'input', 'output', # initial pin direction
+        'gpio', # generate GPIO utility functions
+        'tristate', # pin direction will be changed at runtime
+        'analog', # generate ADC helpers
+        'pullup', # enable the pullup resistor
+        'button', # pin is used by the button debouncer
+        'pps' # generate pin remapping helpers
+    ]
 
     # shortcuts, common groups of functions
     button = ['input', 'gpio', 'button']
-    led = ['output', 'gpio']
+    digital_out = ['output', 'gpio']
+    analog_in = ['input', 'analog']
     uart_tx = ['output', 'pps']
     uart_rx = ['input', 'pps']
-    analog_in = ['input', 'analog']
+```
 
-# a pin definition is:
-# <pin ID>: (<pin name>, [list of pin tags])
+Here's an example pinmap with a variety of features being used:
+
+```py
+# format: 'PIN_ID': ('PIN_NAME', ['list', 'of', 'tags'])
 common = {
-    # port A
-    'A0': ('FWD_PIN', Pin.analog_in), # use the premade tag groups
-    'A1': ('REV_PIN', Pin.analog_in), # Pin.analog_in == ['input', 'analog']
-    'A2': ('POWER_LED_PIN', Pin.led), # Pin.led == ['output', 'gpio']
-    'A3': ('POWER_BUTTON_PIN', Pin.button),
-    'A4': ('CDN_BUTTON_PIN', Pin.button),
-    'A5': ('LUP_BUTTON_PIN', Pin.button),
-    'A6': ('FP_CLOCK_PIN', ['output', 'gpio']), # or directly specify tags
-    'A7': ('RADIO_CMD_PIN', ['output', 'gpio']),
+    # Buttons
+    'A2': ('ONE_BUTTON_PIN', ['input', 'gpio', 'button']), # specify tags
+    'A3': ('TWO_BUTTON_PIN', Pin.button), # or use the premade tag groups
 
-    # port B
-    'B0': None, # pins don't have to be defined
-    'B1': ('ANT_LED_PIN', Pin.led),
-    'B2': ('CUP_BUTTON_PIN', Pin.button),
-    'B3': None,
-    'B4': ('FUNC_BUTTON_PIN', Pin.button),
-    'B5': ('LDN_BUTTON_PIN', Pin.button),
-    'B6': None,
-    'B7': None,
+    # Individual LEDs
+    'A5': ('GREEN_LED_PIN', Pin.digital_out),
+    'A6': ('YELLOW_LED_PIN', Pin.digital_out), 
+    'A7': ('RED_LED_PIN', ['output', 'gpio']),
 
-    # port C
-    'C0': ('RELAY_CLOCK_PIN', Pin.led),
-    'C1': ('RELAY_DATA_PIN', Pin.led),
-    'C2': ('RELAY_STROBE_PIN', Pin.led),
-    'C3': ('BYPASS_LED_PIN', Pin.relay),
-    'C4': ('FP_STROBE_PIN', Pin.relay),
-    'C5': ('FP_DATA_PIN', Pin.relay),
-    'C6': ('USB_TX_PIN', Pin.uart_tx),
-    'C7': ('USB_RX_PIN', Pin.uart_rx),
+    # Analog inputs
+    'B0': ('KNOB_ONE_PIN', Pin.analog_in),
+    'B1': ('KNOB_TWO_PIN', Pin.analog_in),
 
-    # port E
-    'E0': ('FREQ_PIN', Pin.freq),
+    # LED Bargraph -bitbang SPI
+    'C3': ('BARGRAPH_CLOCK_PIN', Pin.digital_out),
+    'C5': ('BARGRAPH_DATA_PIN', Pin.digital_out),
+    'E0': ('BARGRAPH_STROBE_PIN', Pin.digital_out),
+
+    # LCD - bitbang serial
+    'D2': ('LCD_TX_PIN', Pin.digital_out),
+
+    # RGB LED - common cathode, active high
+    'D5': ('RGB_1_LED_PIN', Pin.digital_out),
+    'D6': ('RGB_2_LED_PIN', Pin.digital_out),
+    'D7': ('RGB_3_LED_PIN', Pin.digital_out),
+
+    # USB uart
+    'F6': ('USB_TX_PIN', Pin.uart_tx),
+    'F7': ('USB_RX_PIN', Pin.uart_rx),
 }
+```
 
-# The toolchain supports development and release builds, and the following two
-# pin dictionaries are merged with the common dictionary to create the full
-# configuration for each mode.
+The toolchain supports development and release builds, and the following two pin dictionaries are merged with the common dictionary to create the full configuration for each mode.
 
-# This allows for using different hardware for dev and release, driven by a single
-# declarative configuration
+This allows for using different hardware for dev and release, driven by a single declarative configuration
 
+```py
 development = {
-    'D2': ('DEBUG_TX_PIN', Pin.uart_tx),
-    'D3': ('DEBUG_RX_PIN', Pin.uart_rx),
-    'E1': ('TUNE_BUTTON_PIN', Pin.button),
-    'E2': ('ANT_BUTTON_PIN', Pin.button),
+    # the debug serial port is only available on development builds
+    'B6': ('DEBUG_TX_PIN', Pin.uart_tx),
+    'B7': ('DEBUG_RX_PIN', Pin.uart_rx),
 }
 
 release = {
-    'B6': ('TUNE_BUTTON_PIN', Pin.button),
-    'B7': ('ANT_BUTTON_PIN', Pin.button),
 }
 ```
 
 ## Generated Code
 
-This is the header file `pins.h`, which is the project's central location for pin stuff.
+Let's go over the generated `pin.h` section by section, starting with the Cog block that's doing all the work. This block is what's actually executed by running Cog, and it imports some python libraries that are tucked away in the toolchain directory (these will be explored at a later date). 
 
 ```c
-#ifndef _PINS_H_
-#define _PINS_H_
+/* [[[cog
+    from codegen import fmt; import pins
+    cog.outl(fmt(pins.pin_declarations()))
+]]] */
+// <generated code goes here>
+// [[[end]]]
+```
 
-#include "peripherals/pps.h"
-#include <stdbool.h>
+Here's an easier to read version, if you prefer:
 
-/* ************************************************************************** */
+{{< details "Expand me" >}}
+```python
+from codegen import fmt
+import pins
+import cog # im
+
+# parse pinmap.py and return a string containing the C code we want
+raw_output = pins.pin_declarations()
+# format the C code using clang-format so it matches the project
+formatted_output = fmt(raw_output)
+# insert the formatted code after the Cog block
+cog.outl(formatted_output)
+```
+
+{{< /details >}}
+
+### GPIO Helper Functions
+
+The next section is GPIO related utility functions. These functions use the human readable pin names, and are only created for pins that are marked as requiring specific functionality. This hides the details of which functions are on which pins from the rest of your application, and also tricks the compiler into helping detect configuration errors.
+
+```c
+// GPIO read functions
+extern bool read_ONE_BUTTON_PIN(void);
+extern bool read_TWO_BUTTON_PIN(void);
+
+// GPIO write functions
+extern void set_GREEN_LED_PIN(bool value);
+extern void set_YELLOW_LED_PIN(bool value);
+extern void set_RED_LED_PIN(bool value);
+extern void set_BARGRAPH_CLOCK_PIN(bool value);
+extern void set_BARGRAPH_DATA_PIN(bool value);
+extern void set_LCD_TX_PIN(bool value);
+extern void set_RGB_1_LED_PIN(bool value);
+extern void set_RGB_2_LED_PIN(bool value);
+extern void set_RGB_3_LED_PIN(bool value);
+extern void set_BARGRAPH_STROBE_PIN(bool value);
+
+// GPIO direction functions
+// none
+```
+
+### Button Subsytem
+
+I use a standard button debouncing system in most of my projects, an evolution of [this one](https://hackaday.com/2015/12/09/embed-with-elliot-debounce-your-noisy-buttons-part-i/) described by Elliot Williams at Hackaday. A 5ms timer triggers an interrupt service routine(ISR), which scans all the buttons in the system. The system tracks the recent history of each button, allowing it to ignore button noise and detect 4 distinct input states: UP, DOWN, PRESSED (rising edge), and RELEASED (falling edge).
+
+The generated array `buttonFunctions` is used in the ISR to scan each button in a loop. The enum of the button names allows us to have a clean API for checking button state from application code: `is_btn_down(ONE)`, `is_btn_pressed(TWO)`, etc.
+
+```c
+// Button stuff
+#define NUMBER_OF_BUTTONS 2
+
+typedef bool (*button_function_t)(void);
+
+// array of pointers to button reading functions
+extern button_function_t buttonFunctions[NUMBER_OF_BUTTONS];
+
+// enum of button names
+enum {
+    ONE,
+    TWO,
+} button_names;
+```
+
+### Pin Remapping
+
+This family of microcontrollers allows remapping internal peripherals to different pin using a module called the Peripheral Pin Select, or PPS. Using these helpers to initialize the PPS system ensures peripherals are always routed to the correct locations.
+
+Also note the presence of `#ifdef DEVELOPMENT`, allowing the system to switch between development and release mode by simply adding or removing the `-DDEVELOPMENT` compiler flag.
+
+```c
+// PPS Pin initialization macros
+#define PPS_LCD_RX_PIN PPS_INPUT(D, 3)
+#define PPS_USB_TX_PIN PPS_OUTPUT(F, 6)
+#define PPS_USB_RX_PIN PPS_INPUT(F, 7)
+#ifdef DEVELOPMENT
+#define PPS_DEBUG_RX_PIN PPS_INPUT(B, 6)
+#endif
+#ifdef DEVELOPMENT
+#define PPS_DEBUG_TX_PIN PPS_OUTPUT(B, 7)
+#endif
+```
+
+### Analog Helpers
+
+A numeric channel ID is required to initialize an ADC read, so generated helper macros make sure the correct channels are always being used.
+
+```c
+// ADC Channel Select macros
+#define ADC_KNOB_ONE_PIN 8
+#define ADC_KNOB_TWO_PIN 9
+```
+
+### Full `pins.h`
+
+The full header, if you want to see everything together:
+
+{{< details "Expand me" >}}
+```c
 /* [[[cog
     from codegen import fmt; import pins
     cog.outl(fmt(pins.pin_declarations()))
 ]]] */
 
 // GPIO read functions
-extern bool read_POWER_BUTTON_PIN(void);
-extern bool read_CDN_BUTTON_PIN(void);
-extern bool read_LUP_BUTTON_PIN(void);
-extern bool read_CUP_BUTTON_PIN(void);
-extern bool read_FUNC_BUTTON_PIN(void);
-extern bool read_LDN_BUTTON_PIN(void);
-extern bool read_FREQ_PIN(void);
-extern bool read_TUNE_BUTTON_PIN(void);
-extern bool read_ANT_BUTTON_PIN(void);
+extern bool read_ONE_BUTTON_PIN(void);
+extern bool read_TWO_BUTTON_PIN(void);
+
+// GPIO write functions
+extern void set_GREEN_LED_PIN(bool value);
+extern void set_YELLOW_LED_PIN(bool value);
+extern void set_RED_LED_PIN(bool value);
+extern void set_BARGRAPH_CLOCK_PIN(bool value);
+extern void set_BARGRAPH_DATA_PIN(bool value);
+extern void set_LCD_TX_PIN(bool value);
+extern void set_RGB_1_LED_PIN(bool value);
+extern void set_RGB_2_LED_PIN(bool value);
+extern void set_RGB_3_LED_PIN(bool value);
+extern void set_BARGRAPH_STROBE_PIN(bool value);
+
+// GPIO direction functions
+// none
+
+/* -------------------------------------------------------------------------- */
 
 // Button stuff
-#define NUMBER_OF_BUTTONS 8
+#define NUMBER_OF_BUTTONS 2
 
 // array of pointers to button reading functions
 typedef bool (*button_function_t)(void);
@@ -254,61 +389,36 @@ extern button_function_t buttonFunctions[NUMBER_OF_BUTTONS];
 
 // enum of button names
 enum {
-    POWER,
-    CDN,
-    LUP,
-    CUP,
-    FUNC,
-    LDN,
-    TUNE,
-    ANT,
+    ONE,
+    TWO,
 } button_names;
 
-// GPIO write functions
-extern void set_POWER_LED_PIN(bool value);
-extern void set_FP_CLOCK_PIN(bool value);
-extern void set_RADIO_CMD_PIN(bool value);
-extern void set_ANT_LED_PIN(bool value);
-extern void set_RELAY_CLOCK_PIN(bool value);
-extern void set_RELAY_DATA_PIN(bool value);
-extern void set_RELAY_STROBE_PIN(bool value);
-extern void set_BYPASS_LED_PIN(bool value);
-extern void set_FP_STROBE_PIN(bool value);
-extern void set_FP_DATA_PIN(bool value);
-
-// GPIO direction functions
-extern void set_tris_BYPASS_LED_PIN(bool value);
-extern void set_tris_FP_STROBE_PIN(bool value);
-extern void set_tris_FP_DATA_PIN(bool value);
+/* -------------------------------------------------------------------------- */
 
 // PPS Pin initialization macros
-#define PPS_USB_TX_PIN PPS_OUTPUT(C, 6)
-#define PPS_USB_RX_PIN PPS_INPUT(C, 7)
-#define PPS_FREQ_PIN PPS_INPUT(E, 0)
+#define PPS_LCD_RX_PIN PPS_INPUT(D, 3)
+#define PPS_USB_TX_PIN PPS_OUTPUT(F, 6)
+#define PPS_USB_RX_PIN PPS_INPUT(F, 7)
 #ifdef DEVELOPMENT
-    #define PPS_DEBUG_TX_PIN PPS_OUTPUT(D, 2)
+#define PPS_DEBUG_RX_PIN PPS_INPUT(B, 6)
 #endif
 #ifdef DEVELOPMENT
-    #define PPS_DEBUG_RX_PIN PPS_INPUT(D, 3)
+#define PPS_DEBUG_TX_PIN PPS_OUTPUT(B, 7)
 #endif
+
+/* -------------------------------------------------------------------------- */
 
 // ADC Channel Select macros
-#define ADC_FWD_PIN 0
-#define ADC_REV_PIN 1
+#define ADC_KNOB_ONE_PIN 8
+#define ADC_KNOB_TWO_PIN 9
 
 // [[[end]]]
-
-/* ************************************************************************** */
-
-extern void pins_init(void);
-
-#endif /* _PINS_H_ */
 ```
+{{< /details >}}
 
-And the matching `pins.c` (long, only added for completeness):
+And the full source file. It's essentially just the matching implementation of the header.
 
 {{< details "Expand me" >}}
-
 ```c
 #include "pins.h"
 #include "peripherals/pic_header.h"
@@ -320,57 +430,31 @@ And the matching `pins.c` (long, only added for completeness):
 ]]] */
 
 // GPIO read functions
-bool read_POWER_BUTTON_PIN(void) { return PORTAbits.RA3; }
-bool read_CDN_BUTTON_PIN(void) { return PORTAbits.RA4; }
-bool read_LUP_BUTTON_PIN(void) { return PORTAbits.RA5; }
-bool read_CUP_BUTTON_PIN(void) { return PORTBbits.RB2; }
-bool read_FUNC_BUTTON_PIN(void) { return PORTBbits.RB4; }
-bool read_LDN_BUTTON_PIN(void) { return PORTBbits.RB5; }
-bool read_FREQ_PIN(void) { return PORTEbits.RE0; }
-bool read_TUNE_BUTTON_PIN(void) {
-#ifdef DEVELOPMENT
-    return PORTEbits.RE1;
-#else
-    return PORTBbits.RB6;
-#endif
-}
-bool read_ANT_BUTTON_PIN(void) {
-#ifdef DEVELOPMENT
-    return PORTEbits.RE2;
-#else
-    return PORTBbits.RB7;
-#endif
-}
+bool read_ONE_BUTTON_PIN(void) { return PORTAbits.RA2; }
+bool read_TWO_BUTTON_PIN(void) { return PORTAbits.RA3; }
+
+// GPIO write functions
+void set_GREEN_LED_PIN(bool value) { LATAbits.LATA5 = value; }
+void set_YELLOW_LED_PIN(bool value) { LATAbits.LATA6 = value; }
+void set_RED_LED_PIN(bool value) { LATAbits.LATA7 = value; }
+void set_BARGRAPH_CLOCK_PIN(bool value) { LATCbits.LATC3 = value; }
+void set_BARGRAPH_MISO_PIN(bool value) { LATCbits.LATC4 = value; }
+void set_BARGRAPH_DATA_PIN(bool value) { LATCbits.LATC5 = value; }
+void set_LCD_TX_PIN(bool value) { LATDbits.LATD2 = value; }
+void set_RGB_1_LED_PIN(bool value) { LATDbits.LATD5 = value; }
+void set_RGB_2_LED_PIN(bool value) { LATDbits.LATD6 = value; }
+void set_RGB_3_LED_PIN(bool value) { LATDbits.LATD7 = value; }
+void set_BARGRAPH_STROBE_PIN(bool value) { LATEbits.LATE0 = value; }
+
+// GPIO direction functions
+// none
 
 // Button stuff
 // array of pointers to button reading functions
 button_function_t buttonFunctions[NUMBER_OF_BUTTONS] = {
-    read_POWER_BUTTON_PIN, //
-    read_CDN_BUTTON_PIN,   //
-    read_LUP_BUTTON_PIN,   //
-    read_CUP_BUTTON_PIN,   //
-    read_FUNC_BUTTON_PIN,  //
-    read_LDN_BUTTON_PIN,   //
-    read_TUNE_BUTTON_PIN,  //
-    read_ANT_BUTTON_PIN,   //
+    read_ONE_BUTTON_PIN, //
+    read_TWO_BUTTON_PIN, //
 };
-
-// GPIO write functions
-void set_POWER_LED_PIN(bool value) { LATAbits.LATA2 = value; }
-void set_FP_CLOCK_PIN(bool value) { LATAbits.LATA6 = value; }
-void set_RADIO_CMD_PIN(bool value) { LATAbits.LATA7 = value; }
-void set_ANT_LED_PIN(bool value) { LATBbits.LATB1 = value; }
-void set_RELAY_CLOCK_PIN(bool value) { LATCbits.LATC0 = value; }
-void set_RELAY_DATA_PIN(bool value) { LATCbits.LATC1 = value; }
-void set_RELAY_STROBE_PIN(bool value) { LATCbits.LATC2 = value; }
-void set_BYPASS_LED_PIN(bool value) { LATCbits.LATC3 = value; }
-void set_FP_STROBE_PIN(bool value) { LATCbits.LATC4 = value; }
-void set_FP_DATA_PIN(bool value) { LATCbits.LATC5 = value; }
-
-// GPIO direction functions
-void set_tris_BYPASS_LED_PIN(bool value) { TRISCbits.TRISC3 = value; }
-void set_tris_FP_STROBE_PIN(bool value) { TRISCbits.TRISC4 = value; }
-void set_tris_FP_DATA_PIN(bool value) { TRISCbits.TRISC5 = value; }
 
 // [[[end]]]
 
@@ -381,114 +465,76 @@ void set_tris_FP_DATA_PIN(bool value) { TRISCbits.TRISC5 = value; }
 ]]] */
 
 void pins_init(void) {
-    // FWD_PIN
-    TRISAbits.TRISA0 = 1;
-    ANSELAbits.ANSELA0 = 1;
+    // ONE_BUTTON_PIN
+    TRISAbits.TRISA2 = 1;
+    WPUAbits.WPUA2 = 1;
 
-    // REV_PIN
-    TRISAbits.TRISA1 = 1;
-    ANSELAbits.ANSELA1 = 1;
-
-    // POWER_LED_PIN
-    TRISAbits.TRISA2 = 0;
-
-    // POWER_BUTTON_PIN
+    // TWO_BUTTON_PIN
     TRISAbits.TRISA3 = 1;
     WPUAbits.WPUA3 = 1;
 
-    // CDN_BUTTON_PIN
-    TRISAbits.TRISA4 = 1;
-    WPUAbits.WPUA4 = 1;
+    // GREEN_LED_PIN
+    TRISAbits.TRISA5 = 0;
 
-    // LUP_BUTTON_PIN
-    TRISAbits.TRISA5 = 1;
-    WPUAbits.WPUA5 = 1;
-
-    // FP_CLOCK_PIN
+    // YELLOW_LED_PIN
     TRISAbits.TRISA6 = 0;
 
-    // RADIO_CMD_PIN
+    // RED_LED_PIN
     TRISAbits.TRISA7 = 0;
 
-    // ANT_LED_PIN
-    TRISBbits.TRISB1 = 0;
+    // KNOB_ONE_PIN
+    TRISBbits.TRISB0 = 1;
+    ANSELBbits.ANSELB0 = 1;
 
-    // CUP_BUTTON_PIN
-    TRISBbits.TRISB2 = 1;
-    WPUBbits.WPUB2 = 1;
+    // KNOB_TWO_PIN
+    TRISBbits.TRISB1 = 1;
+    ANSELBbits.ANSELB1 = 1;
 
-    // FUNC_BUTTON_PIN
-    TRISBbits.TRISB4 = 1;
-    WPUBbits.WPUB4 = 1;
-
-    // LDN_BUTTON_PIN
-    TRISBbits.TRISB5 = 1;
-    WPUBbits.WPUB5 = 1;
-
-    // RELAY_CLOCK_PIN
-    TRISCbits.TRISC0 = 0;
-
-    // RELAY_DATA_PIN
-    TRISCbits.TRISC1 = 0;
-
-    // RELAY_STROBE_PIN
-    TRISCbits.TRISC2 = 0;
-
-    // BYPASS_LED_PIN
+    // BARGRAPH_CLOCK_PIN
     TRISCbits.TRISC3 = 0;
 
-    // FP_STROBE_PIN
+    // BARGRAPH_MISO_PIN
     TRISCbits.TRISC4 = 0;
 
-    // FP_DATA_PIN
+    // BARGRAPH_DATA_PIN
     TRISCbits.TRISC5 = 0;
 
+    // LCD_TX_PIN
+    TRISDbits.TRISD2 = 0;
+
+    // LCD_RX_PIN
+    TRISDbits.TRISD3 = 1;
+
+    // RGB_1_LED_PIN
+    TRISDbits.TRISD5 = 0;
+
+    // RGB_2_LED_PIN
+    TRISDbits.TRISD6 = 0;
+
+    // RGB_3_LED_PIN
+    TRISDbits.TRISD7 = 0;
+
+    // BARGRAPH_STROBE_PIN
+    TRISEbits.TRISE0 = 0;
+
     // USB_TX_PIN
-    TRISCbits.TRISC6 = 0;
+    TRISFbits.TRISF6 = 0;
 
     // USB_RX_PIN
-    TRISCbits.TRISC7 = 1;
-
-    // FREQ_PIN
-    TRISEbits.TRISE0 = 1;
-
-// DEBUG_TX_PIN
-#ifdef DEVELOPMENT
-    TRISDbits.TRISD2 = 0;
-#endif
+    TRISFbits.TRISF7 = 1;
 
 // DEBUG_RX_PIN
 #ifdef DEVELOPMENT
-    TRISDbits.TRISD3 = 1;
-#endif
-
-// TUNE_BUTTON_PIN
-#ifdef DEVELOPMENT
-    TRISEbits.TRISE1 = 1;
-#else
     TRISBbits.TRISB6 = 1;
 #endif
-#ifdef DEVELOPMENT
-    WPUEbits.WPUE1 = 1;
-#else
-    WPUBbits.WPUB6 = 1;
-#endif
 
-// ANT_BUTTON_PIN
+// DEBUG_TX_PIN
 #ifdef DEVELOPMENT
-    TRISEbits.TRISE2 = 1;
-#else
-    TRISBbits.TRISB7 = 1;
-#endif
-#ifdef DEVELOPMENT
-    WPUEbits.WPUE2 = 1;
-#else
-    WPUBbits.WPUB7 = 1;
+    TRISBbits.TRISB7 = 0;
 #endif
 }
 // [[[end]]]
 ```
-
 {{< /details >}}
 
 # Feature Overview, or: Why did we actually do all this?
@@ -499,6 +545,7 @@ The implementation of the code generator is unremarkable(it's just strings in py
     - GPIO read
     - GPIO write
     - GPIO direction set
+- automatic port initializing, making sure every pin is configured correctly
 - Button debouncing subsystem configuration:
     - total button count
     - an array of function pointers to the GPIO read function for each button

@@ -209,8 +209,15 @@ tr:nth-child(even) {
     background-color: rgb(70, 69, 69);
 }
 
-h1, h2, h3 {
-    border-bottom: 1px solid #3D3D3D;
+h1, h2 {
+    border-bottom: 2px solid #6b6b6b;
+}
+
+h3 {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, rgba(61,61,61,1) 50%, rgba(0,0,0,0) 75%);
+    border-image-slice: 1;
+    width:100%;
 }
 
 #title {

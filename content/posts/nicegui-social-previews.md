@@ -12,11 +12,15 @@ Open Graph documentation: https://ogp.me
 
 Less technical overview: https://ahrefs.com/blog/open-graph-meta-tags/
 
-A word of warning! Many social media sites will fetch the metadata with a web crawler running on their servers, and cache the result! This means that you can't debug your OGP previews inside Discord or Facebook chat, because it'll keep showing you the first preview that it loaded. I recommend using a tool like https://socialsharepreview.com to check your tags, so you don't get tricked by secret caching.
+{{< alert >}}
+A word of warning! Many social media sites will fetch the metadata with a web crawler running on their servers, and cache the result! This means that you can't debug your OGP previews inside Discord or Facebook chat, because it'll keep showing you the first preview that it loaded. 
 
-## 
+I recommend using a tool like https://socialsharepreview.com to check your tags, so you don't get tricked by secret caching.
+{{< /alert >}}
 
-Supporting these page previews in NiceGUI is relatively easy:
+## OGP in NiceGUI
+
+Supporting these page previews in NiceGUI is relatively easy, we just need to add the relevant HTML meta tags to the page head:
 
 ```py
 from nicegui import ui

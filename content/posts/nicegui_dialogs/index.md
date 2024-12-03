@@ -1,5 +1,5 @@
 ---
-title: 'NiceGUI Tips: Elegant Dialogs'
+title: 'NiceGUI Tips: Elegant Dialog Lifecycles'
 date: 2024-10-05T15:38:58-04:00
 draft: false
 type: posts
